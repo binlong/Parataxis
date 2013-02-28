@@ -55,6 +55,6 @@ public class Grocery {
 	 */
 	public void testPrint(){
 		System.out.println("UPC:"+upc+", name: "+name+", price: $"+basePrice);
-		System.out.println("Date:"+baseStartDate+" thru "+baseEndDate);
+		System.out.println("Date:"+baseStartDate+" thru "+baseEndDate);	
 	}
 }

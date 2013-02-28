@@ -1,0 +1,5 @@
+upc,name,type,category,basePrice,baseStartDate,baseEndDate,discount,discountStartDate,discountEndDate,buyM,buyN,buyStartDate,buyEndDate,saleTax
+
+String,String,char,char,double,Date,Date,double,Date,Date,int,int,Date,Date,char
+
+A000000000,HW QUESO ASADERO,F,K,3.87,2013-1-1,2013-12-31,100.00,2013-1-1,2013-12-31,1,1,2013-1-1,2013-12-31,N

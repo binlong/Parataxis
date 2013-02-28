@@ -27,7 +27,6 @@ public class PopulateGroceryTest {
 		is = new BufferedReader(new FileReader(file));	
 		
 		while((text = is.readLine()) != null){
-			
 			// The input file is delimited by commas
 			String[] temp = text.split(",");
 			
@@ -59,23 +58,5 @@ public class PopulateGroceryTest {
 
 		is.close();
 		return alGrocTest;
-		
-//		Grocery temp = new Grocery("A000000000", "HW QUESO ASADERO", 'F', 
-//		'K', 3.87, janfirst, dec31, 
-//		100.00, janfirst, dec31, 
-//		1, 1, janfirst, dec31, 'N');
-//test.add(temp);
-//
-//Grocery temp2 = new Grocery("A000000001", "SHOUT LIQUID 60 OZ REFILL", 'F', 
-//		'D', 4.67, janfirst, dec31, 
-//		80.00, janfirst, dec31, 
-//		1, 0, janfirst, dec31, 'T');
-//test.add(temp2);
-//
-//Grocery temp3 = new Grocery("A000000002", "GARLIC - BULK EACH", 'Q', 
-//		'P', 0.67, janfirst, dec31, 
-//		100.00, janfirst, dec31, 
-//		1, 0, janfirst, dec31, 'N');
-//test.add(temp3);
 	}
 }

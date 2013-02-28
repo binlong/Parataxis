@@ -57,4 +57,18 @@ public class Grocery {
 		System.out.println("UPC:"+upc+", name: "+name+", price: $"+basePrice);
 		System.out.println("Date:"+baseStartDate+" thru "+baseEndDate);	
 	}
+	
+	public void printAll() {
+		System.out.println("Grocery [upc=" + upc + ", name=" + name + ", type=" + type
+				+ ", category=" + category);
+		System.out.println("basePrice=" + basePrice
+				+ ", baseStartDate=" + baseStartDate + ", baseEndDate="
+				+ baseEndDate);
+		System.out.println("discount=" + discount
+				+ ", discountStartDate=" + discountStartDate
+				+ ", discountEndDate=" + discountEndDate);
+		System.out.println("buyM=" + buyM
+				+ ", buyN=" + buyN + ", buyStartDate=" + buyStartDate
+				+ ", buyEndDate=" + buyEndDate + ", salesTax=" + salesTax + "]"+'\n');
+	}
 }

@@ -7,6 +7,7 @@ public class Tax {
 	private Date startDate;
 	private Date endDate;
 	
+	// rounding errors n shit
 	
 	
 	public Tax(double taxRate, Date startDate, Date endDate) {

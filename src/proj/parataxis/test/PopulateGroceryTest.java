@@ -39,6 +39,7 @@ public class PopulateGroceryTest {
 			Date baseStartDate = java.sql.Date.valueOf(temp[5]); //5
 			Date baseEndDate = java.sql.Date.valueOf(temp[6]); //6
 			double discount = Double.parseDouble(temp[7]);
+			System.out.println(temp[8]);
 			Date discountStartDate = java.sql.Date.valueOf(temp[8]); //8
 			Date discountEndDate = java.sql.Date.valueOf(temp[9]); //9
 			int buyM = Integer.parseInt(temp[10]);

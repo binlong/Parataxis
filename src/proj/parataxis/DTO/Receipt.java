@@ -12,7 +12,12 @@ public class Receipt {
 	
 	public List<Grocery> groceryList;
 	public Customer customer;
+	private double salesSubtotal = 0.0;
+	private double total = 0.0;
 	
+	public double getSalesSubtotal(){
+		return salesSubtotal;
+	}
 	public Receipt() {
 		
 	}
@@ -22,8 +27,15 @@ public class Receipt {
 		this.customer = customer;
 	}
 	
-	@Override
-	public String toString() {
+	
+	public double calculateSalesSubtotal() {
+		for (Grocery grocery : groceryList) {
+			salesSubtotal += grocery.getBasePrice();
+		}
+		return salesSubtotal;
+	}
+	
+	public String makeHeader() {
 		String receipt = "";
 		String centerTest = " 123456789012345678901234567890123456789012\n";
 		String header = "+------------------------------------------+\n" +
@@ -48,5 +60,10 @@ public class Receipt {
 		}
 		
 		return centerTest + header + receipt;
+	}
+	
+	public String makeFooter(){
+		String footer = "";
+		return footer;
 	}
 }

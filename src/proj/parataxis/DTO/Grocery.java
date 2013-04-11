@@ -57,6 +57,10 @@ public class Grocery {
 		return type;
 	}
 	
+	public double getBasePrice() {
+		return basePrice;
+	}
+	
 	
 	
 

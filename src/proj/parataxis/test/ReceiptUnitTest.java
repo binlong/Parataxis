@@ -70,18 +70,4 @@ public class ReceiptUnitTest {
 		assertThat("subtotal",subTotal, equalTo(51.75));
 	
 	}
-	public void toString_prints_type_F_correctly(){
-		Grocery grocery = mock(Grocery.class);
-		when(groceryList.size()).thenReturn(1);
-		when(groceryList.get(0)).thenReturn(grocery);
-		when(grocery.getName()).thenReturn("JAR OF PICKLES");
-		when(grocery.getCategory()).thenReturn('M');
-		when(grocery.getType()).thenReturn('F');
-
-		final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-		System.setOut(new PrintStream(outContent));
-		assertThat("print message", outContent.toString(), containsString(Receipt.storeName));
-
-	}
-
 }

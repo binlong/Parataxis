@@ -45,6 +45,18 @@ public class Grocery {
 		this.salesTax = salesTax;
 	}
 	
+	public String getName() {
+		return name;
+	}
+	
+	public char getCategory() {
+		return category;
+	}
+	
+	public char getType() {
+		return type;
+	}
+	
 	
 	
 

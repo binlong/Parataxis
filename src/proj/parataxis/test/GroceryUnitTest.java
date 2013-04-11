@@ -2,13 +2,16 @@ package proj.parataxis.test;
 
 import org.junit.Before;
 import org.junit.Test;
+
 import proj.parataxis.DTO.Grocery;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.Date;
 
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.junit.matchers.JUnitMatchers.containsString;
 
 /**
@@ -58,5 +61,23 @@ public class GroceryUnitTest {
         assertThat("print all line 2", outContent.toString(), containsString("basePrice=1.23, baseStartDate=" + baseStartDate + ", baseEndDate=" + baseEndDate));
         assertThat("print all line 3", outContent.toString(), containsString("discount=2.34, discountStartDate=" + discountStartDate + ", discountEndDate=" + discountEndDate));
         assertThat("print all line 4", outContent.toString(), containsString("buyM=5, buyN=2, buyStartDate=" + buyStartDate + ", buyEndDate=" + buyEndDate + ", salesTax=S]"));
+    }
+    
+    @Test
+    public void getName_returnsName() throws Exception {
+    	String name = grocery.getName();
+    	assertThat("grocery name", name, containsString("name"));
+    }
+    
+    @Test
+    public void getCategory_returnsCategory() throws Exception {
+    	char category = grocery.getCategory();
+    	assertTrue(category == 'C');
+    }
+    
+    @Test
+    public void getType_returnsType() throws Exception {
+    	char type = grocery.getType();
+    	assertTrue(type == 'T');
     }
 }

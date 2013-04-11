@@ -1,10 +1,10 @@
-package parataxis.test;
+package init.parataxis.test;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 import parataxis.dto.Customer;
-import parataxis.main.PopulateCustomers;
+import init.parataxis.main.PopulateCustomers;
 
 
 

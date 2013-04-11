@@ -1,14 +1,15 @@
 package proj.parataxis.test;
 
-import org.junit.Before;
-import org.junit.Test;
-import proj.parataxis.DTO.Customer;
+import static org.junit.Assert.assertThat;
+import static org.junit.matchers.JUnitMatchers.containsString;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import static org.junit.Assert.assertThat;
-import static org.junit.matchers.JUnitMatchers.containsString;
+import org.junit.Before;
+import org.junit.Test;
+
+import parataxis.dto.Customer;
 
 /**
  * Created with IntelliJ IDEA.

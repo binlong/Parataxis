@@ -1,4 +1,4 @@
-package parataxis.test;
+package init.parataxis.test;
 
 import org.junit.Before;
 import org.junit.Test;

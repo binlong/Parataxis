@@ -3,8 +3,7 @@ package proj.parataxis.test;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import proj.parataxis.DTO.Customer;
-import proj.parataxis.DTO.Grocery;
+import parataxis.dto.Customer;
 
 public class CustomerTest {
 	public static void main(String[] args) throws IOException{

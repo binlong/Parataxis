@@ -1,18 +1,17 @@
 package proj.parataxis.test;
 
-import org.junit.Before;
-import org.junit.Test;
-
-import proj.parataxis.DTO.Grocery;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.junit.matchers.JUnitMatchers.containsString;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.Date;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.junit.matchers.JUnitMatchers.containsString;
+import org.junit.Before;
+import org.junit.Test;
+
+import parataxis.dto.Grocery;
 
 /**
  * Created with IntelliJ IDEA.

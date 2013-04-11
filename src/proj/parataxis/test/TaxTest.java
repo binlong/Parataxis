@@ -3,7 +3,7 @@ package proj.parataxis.test;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import proj.parataxis.DTO.Tax;
+import parataxis.dto.Tax;
 
 public class TaxTest {
 	public static void main(String[] args) throws IOException{

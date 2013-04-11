@@ -3,7 +3,7 @@ package proj.parataxis.test;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import proj.parataxis.DTO.Grocery;
+import parataxis.dto.Grocery;
 
 public class GroceryTest {
 	public static void main(String[] args) throws IOException{

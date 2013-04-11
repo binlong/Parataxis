@@ -7,8 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
-import proj.parataxis.DTO.Grocery;
-import proj.parataxis.DTO.Tax;
+import parataxis.dto.Tax;
 
 public class PopulateTax {
 	

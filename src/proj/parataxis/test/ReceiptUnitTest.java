@@ -1,10 +1,10 @@
 package proj.parataxis.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.containsString;
-
-import static org.mockito.Mockito.*;
+import static org.hamcrest.Matchers.equalTo;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -14,9 +14,9 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import proj.parataxis.DTO.Customer;
-import proj.parataxis.DTO.Grocery;
-import proj.parataxis.DTO.Receipt;
+import parataxis.dto.Customer;
+import parataxis.dto.Grocery;
+import parataxis.dto.Receipt;
 
 
 public class ReceiptUnitTest {	

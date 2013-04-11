@@ -1,10 +1,10 @@
-package parataxis.test;
+package init.parataxis.test;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 import parataxis.dto.Grocery;
-import parataxis.main.PopulateGrocery;
+import init.parataxis.main.PopulateGrocery;
 
 public class GroceryTest {
 	

@@ -1,4 +1,4 @@
-package proj.parataxis.DTO;
+package parataxis.dto;
 
 import java.util.List;
 

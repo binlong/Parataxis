@@ -1,4 +1,4 @@
-package parataxis.main;
+package init.parataxis.main;
 
 import java.io.BufferedReader;
 import java.io.File;

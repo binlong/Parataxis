@@ -1,10 +1,10 @@
-package parataxis.test;
+package init.parataxis.test;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 import parataxis.dto.Tax;
-import parataxis.main.PopulateTax;
+import init.parataxis.main.PopulateTax;
 
 
 public class TaxTest {

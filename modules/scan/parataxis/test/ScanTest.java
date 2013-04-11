@@ -1,10 +1,10 @@
-package parataxis.test;
+package scan.parataxis.test;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 import parataxis.dto.Grocery;
-import parataxis.main.Scan;
+import scan.parataxis.main.Scan;
 
 
 public class ScanTest {

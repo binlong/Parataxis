@@ -2,13 +2,12 @@ package proj.parataxis.test;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
-import proj.parataxis.DTO.Grocery;
+import parataxis.dto.Grocery;
 
 public class PopulateGroceryTest {
 	

@@ -1,4 +1,4 @@
-package parataxis.main;
+package scan.parataxis.main;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import parataxis.dto.Grocery;
-import parataxis.main.PopulateGrocery;
+import init.parataxis.main.PopulateGrocery;
 
 
 public class Scan {

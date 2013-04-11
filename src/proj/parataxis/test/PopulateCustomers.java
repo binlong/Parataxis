@@ -6,7 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import proj.parataxis.DTO.Customer;
+import parataxis.dto.Customer;
 
 public class PopulateCustomers {
 

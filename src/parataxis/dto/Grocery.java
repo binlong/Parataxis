@@ -21,7 +21,16 @@ public class Grocery {
 	private char salesTax;
 	//data for Scan
 	private int quantity;
+	private boolean coupon;
 	
+	public boolean isCoupon() {
+		return coupon;
+	}
+
+	public void setCoupon(boolean coupon) {
+		this.coupon = coupon;
+	}
+
 	public Grocery(){
 		
 	}
@@ -51,6 +60,70 @@ public class Grocery {
 	
 	public void incrementQuantity(){
 		this.quantity++;
+	}
+
+	public void setUpc(String upc) {
+		this.upc = upc;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setType(char type) {
+		this.type = type;
+	}
+
+	public void setCategory(char category) {
+		this.category = category;
+	}
+
+	public void setBasePrice(double basePrice) {
+		this.basePrice = basePrice;
+	}
+
+	public void setBaseStartDate(Date baseStartDate) {
+		this.baseStartDate = baseStartDate;
+	}
+
+	public void setBaseEndDate(Date baseEndDate) {
+		this.baseEndDate = baseEndDate;
+	}
+
+	public void setDiscount(double discount) {
+		this.discount = discount;
+	}
+
+	public void setDiscountStartDate(Date discountStartDate) {
+		this.discountStartDate = discountStartDate;
+	}
+
+	public void setDiscountEndDate(Date discountEndDate) {
+		this.discountEndDate = discountEndDate;
+	}
+
+	public void setBuyM(int buyM) {
+		this.buyM = buyM;
+	}
+
+	public void setBuyN(int buyN) {
+		this.buyN = buyN;
+	}
+
+	public void setBuyStartDate(Date buyStartDate) {
+		this.buyStartDate = buyStartDate;
+	}
+
+	public void setBuyEndDate(Date buyEndDate) {
+		this.buyEndDate = buyEndDate;
+	}
+
+	public void setSalesTax(char salesTax) {
+		this.salesTax = salesTax;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 
 	public String getUpc() {

@@ -16,7 +16,29 @@ public class Tax {
 		this.endDate = endDate;
 	}
 
+	public double getTaxRate() {
+		return taxRate;
+	}
 
+	public void setTaxRate(double taxRate) {
+		this.taxRate = taxRate;
+	}
+
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
 
 	//TODO: create a way of displaying this information if needed
 	public void testPrint(){

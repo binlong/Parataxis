@@ -23,12 +23,12 @@ public class Grocery {
 	private int quantity;
 	private boolean coupon;
 	
-	public boolean isCoupon() {
+	public boolean getCoupon() {
 		return coupon;
 	}
 
-	public void setCoupon(boolean coupon) {
-		this.coupon = coupon;
+	public void scannedCoupon() {
+		this.coupon = true;
 	}
 
 	public Grocery(){
@@ -56,6 +56,7 @@ public class Grocery {
 		this.buyEndDate = buyEndDate;
 		this.salesTax = salesTax;
 		this.quantity = 0;
+		this.coupon = false;
 	}
 	
 	public void incrementQuantity(){
@@ -189,6 +190,7 @@ public class Grocery {
 		return quantity;
 		
 	}
+	
 
 	//TODO: create a way to display relevant information (with toString or do it here)
 	/**

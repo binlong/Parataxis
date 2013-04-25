@@ -15,4 +15,10 @@ public class Customer {
 	public void testPrint(){
 		System.out.println("Type: "+type+", num: "+cardNum+", balance: "+moneyAvail);
 	}
+
+	@Override
+	public String toString() {
+		return "Customer type=" + type + ", cardNum=" + cardNum
+				+ ", moneyAvail=" + moneyAvail;
+	}
 }

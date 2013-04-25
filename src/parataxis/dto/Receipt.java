@@ -1,5 +1,6 @@
 package parataxis.dto;
 
+import java.text.NumberFormat;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -16,6 +17,8 @@ public class Receipt {
 	private double salesSubtotal = 0.0;
 	private double salesTax = 0.0;
 	private double total = 0.0;
+	
+	NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance();
 	
 	public Receipt() {
 		
@@ -38,8 +41,11 @@ public class Receipt {
 	
 	public double calculateSalesTax() {
 		Double salesTotal = 0.0;
+		double taxrate = tax.getTaxRate();
 		for (Grocery grocery : groceryList) {
-			salesTotal += grocery.getSalesTax();
+			if(grocery.getSalesTax() == 'T'){
+				salesTotal += grocery.getBasePrice() * ((taxrate/100));
+			}
 		}
 		return salesTotal;
 	}
@@ -58,11 +64,15 @@ public class Receipt {
 	
 	public String printGroceries() {
 		String totalGroceries = "";
+		double basePrice;
 		for (int i = 0; i < groceryList.size(); i++) {
 			Grocery grocery = groceryList.get(i);
-			String groceryReceipt = "|" +  (i+1) + "   " + grocery.getName();
+			String groceryReceipt = "|" +  (i+1);
+			groceryReceipt += StringUtils.repeat(" ", 4 - String.valueOf(i+1).length()); //"   " + grocery.getName();
+			groceryReceipt += grocery.getName(); 
 			groceryReceipt += StringUtils.repeat(" ", 26 - grocery.getName().length());
 			groceryReceipt += grocery.getCategory() + "" + grocery.getType();
+			basePrice = grocery.getBasePrice();
 			if (grocery.getType() == 'P' || grocery.getType() == 'Q') {
 				groceryReceipt += StringUtils.repeat(" ", 10);
 				groceryReceipt += "|\n";
@@ -79,17 +89,20 @@ public class Receipt {
 				groceryReceipt += "@";
 				groceryReceipt += "   1/";
 				
-				groceryReceipt += StringUtils.repeat(" ", 8 - String.format("%.2f", grocery.getBasePrice()).length());
+				groceryReceipt += StringUtils.repeat(" ", 8 - currencyFormatter.format(basePrice).length());
 				groceryReceipt += String.format("%.2f", grocery.getBasePrice());
-				groceryReceipt += StringUtils.repeat(" ", 8);
-				groceryReceipt += String.format("%.2f", grocery.getBasePrice() * grocery.getQuantity());
+				groceryReceipt += StringUtils.repeat(" ", 6);
+				//groceryReceipt += String.format("%.2f", grocery.getBasePrice() * grocery.getQuantity());
+				groceryReceipt += currencyFormatter.format(basePrice*grocery.getQuantity());
 			}
 			else {
-				groceryReceipt += StringUtils.repeat(" ", 8 - String.format("%.2f", grocery.getBasePrice()).length());
-				groceryReceipt += String.format("%.2f", grocery.getBasePrice());
+				groceryReceipt += StringUtils.repeat(" ", 8 - currencyFormatter.format(basePrice).length());
+				//groceryReceipt += String.format("%.2f", grocery.getBasePrice());
+				groceryReceipt += currencyFormatter.format(basePrice);
 			}
 			groceryReceipt += "  |\n";
 			totalGroceries += groceryReceipt;
+			//currencyFormatter.format(discnt)
 		}
 		return totalGroceries;
 	}
@@ -98,7 +111,7 @@ public class Receipt {
 		salesSubtotal = calculateSalesSubtotal();
 		salesTax = calculateSalesTax();
 		total = salesSubtotal + salesTax;
-		System.out.println(salesTax + " : " + salesSubtotal);
+		//System.out.println(salesTax + " : " + salesSubtotal);
 		
 		String subtotalString = "|******** Sale Subtotal***";
 		subtotalString += StringUtils.repeat(" ", 15 - String.format("%.2f", salesSubtotal).length());

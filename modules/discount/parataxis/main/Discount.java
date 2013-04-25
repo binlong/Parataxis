@@ -35,7 +35,7 @@ public class Discount {
 		PopulateCoupon popcpn = new PopulateCoupon();
 		ArrayList<Coupon> cpnList = popcpn.populateCouponList();
 		
-		System.out.println("|=================================          |");
+		System.out.println("|=================================         |");
 		for(Grocery grc : scanList){
 			grc.getUpc();
 			for(Coupon cpn : cpnList){
@@ -44,7 +44,7 @@ public class Discount {
 					if(cpn.getType() == 'S'){
 						//System.out.print("Store");
 						discnt = cpn.getDiscount(); 
-						System.out.print("|  Mfg Store Coupon                  "+currencyFormatter.format(discnt));
+						System.out.print("|  Mfg Store Coupon                 "+currencyFormatter.format(discnt));
 						if(currencyFormatter.format(discnt).length() == 5)
 							System.out.println("  |");
 						else if (currencyFormatter.format(discnt).length() == 6)
@@ -56,7 +56,7 @@ public class Discount {
 					else if(cpn.getType() == 'M'){
 						//System.out.print("Cents-off Manufacturer");
 						discnt = cpn.getDiscount(); 
-						System.out.print("|  Mfg Cents Off Coupon              "+currencyFormatter.format(discnt));
+						System.out.print("|  Mfg Cents Off Coupon             "+currencyFormatter.format(discnt));
 						if(currencyFormatter.format(discnt).length() == 5)
 							System.out.println("  |");
 						else if (currencyFormatter.format(discnt).length() == 6)
@@ -69,7 +69,7 @@ public class Discount {
 						discnt = cpn.getDiscount(); 
 						if(grc.getQuantity() >= (cpn.getBuyM()+cpn.getGetN())){							
 							discnt = cpn.getGetN()*grc.getBasePrice();
-							System.out.print("|  HWI Cents Off Coupon              "+currencyFormatter.format(discnt));
+							System.out.print("|  HWI Cents Off Coupon             "+currencyFormatter.format(discnt));
 						
 						if(currencyFormatter.format(discnt).length() == 5)
 							System.out.println("  |");
@@ -84,13 +84,13 @@ public class Discount {
 				}
 			}
 		}
-		System.out.print("|                      Total         "+currencyFormatter.format(total));
+		System.out.print("|                      Total        "+currencyFormatter.format(total));
 		if(currencyFormatter.format(total).length() == 5)
 			System.out.println("  |");
 		else if (currencyFormatter.format(total).length() == 6)
 			System.out.println(" |");
 		else
 			System.out.println("|");
-		System.out.println("|=================================          |");
+		System.out.println("|=================================         |");
 	}
 }

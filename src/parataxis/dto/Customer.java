@@ -11,6 +11,30 @@ public class Customer {
 		this.moneyAvail = moneyAvail;
 	}
 	
+	public char getType() {
+		return type;
+	}
+
+	public void setType(char type) {
+		this.type = type;
+	}
+
+	public long getCardNum() {
+		return cardNum;
+	}
+
+	public void setCardNum(long cardNum) {
+		this.cardNum = cardNum;
+	}
+
+	public double getMoneyAvail() {
+		return moneyAvail;
+	}
+
+	public void setMoneyAvail(double moneyAvail) {
+		this.moneyAvail = moneyAvail;
+	}
+
 	//TODO: create a way of displaying this information if needed
 	public void testPrint(){
 		System.out.println("Type: "+type+", num: "+cardNum+", balance: "+moneyAvail);

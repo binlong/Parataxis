@@ -1,6 +1,5 @@
 package parataxis.dto;
 
-import java.text.NumberFormat;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -17,16 +16,24 @@ public class Receipt {
 	private double salesSubtotal = 0.0;
 	private double salesTax = 0.0;
 	private double total = 0.0;
+	private double cash = 0.0;
+	private double cashBack = 0.0;
 	
-	NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance();
 	
 	public Receipt() {
 		
 	}
 	
-	public Receipt(List<Grocery> groceryList, Customer customer, Tax tax) {
+	public Receipt(List<Grocery> groceryList, Customer customer, Tax tax, Double cashBack) {
 		this.groceryList = groceryList;
 		this.customer = customer;
+		this.tax = tax;
+		this.cashBack = cashBack;
+	}
+	
+	public Receipt(List<Grocery> groceryList, Double cash, Tax tax) {
+		this.groceryList = groceryList;
+		this.cash = cash;
 		this.tax = tax;
 	}
 	
@@ -48,6 +55,17 @@ public class Receipt {
 			}
 		}
 		return salesTotal;
+	}
+	
+	public double calculateTotal() {
+		return salesSubtotal + salesTax + cashBack;
+	}
+	
+	public boolean checkFunding() {
+		if (customer.getMoneyAvail() > total) {
+			return true;
+		}
+		return false;
 	}
 	
 	public String makeHeader() {
@@ -89,20 +107,18 @@ public class Receipt {
 				groceryReceipt += "@";
 				groceryReceipt += "   1/";
 				
-				groceryReceipt += StringUtils.repeat(" ", 8 - currencyFormatter.format(basePrice).length());
-				groceryReceipt += String.format("%.2f", grocery.getBasePrice());
-				groceryReceipt += StringUtils.repeat(" ", 6);
-				//groceryReceipt += String.format("%.2f", grocery.getBasePrice() * grocery.getQuantity());
-				groceryReceipt += currencyFormatter.format(basePrice*grocery.getQuantity());
+				groceryReceipt += StringUtils.repeat(" ", 8 - String.format("%.2f", grocery.getBasePrice()).length());
+				groceryReceipt += String.format("%.2f", grocery.getBasePrice());				
+				groceryReceipt += StringUtils.repeat(" ", 12 - String.format("%.2f", grocery.getBasePrice() * grocery.getQuantity()).length());
+				groceryReceipt += String.format("%.2f", grocery.getBasePrice() * grocery.getQuantity());
 			}
 			else {
-				groceryReceipt += StringUtils.repeat(" ", 8 - currencyFormatter.format(basePrice).length());
-				//groceryReceipt += String.format("%.2f", grocery.getBasePrice());
-				groceryReceipt += currencyFormatter.format(basePrice);
+				groceryReceipt += StringUtils.repeat(" ", 8 - String.format("%.2f", grocery.getBasePrice()).length());
+				groceryReceipt += String.format("%.2f", grocery.getBasePrice()); 
 			}
 			groceryReceipt += "  |\n";
 			totalGroceries += groceryReceipt;
-			//currencyFormatter.format(discnt)
+
 		}
 		return totalGroceries;
 	}
@@ -110,7 +126,7 @@ public class Receipt {
 	public String printTotal() {
 		salesSubtotal = calculateSalesSubtotal();
 		salesTax = calculateSalesTax();
-		total = salesSubtotal + salesTax;
+		total = calculateTotal();
 		//System.out.println(salesTax + " : " + salesSubtotal);
 		
 		String subtotalString = "|******** Sale Subtotal***";
@@ -138,6 +154,39 @@ public class Receipt {
 		return subtotalString + salesTaxString + salesTaxRateString + totalString;
 	}
 	
+	public String printPayment() {
+		String paymentString = "|";
+		if (customer != null) {
+			paymentString += "Account Nr.:xxxxxxxxxxxx";
+			paymentString += Long.toString(customer.getCardNum()).substring(12, 16);
+			paymentString += StringUtils.repeat(" ", 14);
+			paymentString += "|\n";
+			if (customer.getType() == 'C') {
+				paymentString += "|Credit Card Charged";
+			}
+			else {
+				paymentString += "|Debit Card Charged ";
+			}
+			paymentString += StringUtils.repeat(" ", 21 - String.format("%.2f", total).length());
+			paymentString += String.format("%.2f", total);
+			paymentString += "  |\n";
+			if (checkFunding()) {
+				paymentString += "|Approved";
+				paymentString += StringUtils.repeat(" ", 34);
+				paymentString += "|\n";
+			}
+			else {
+				paymentString += "|Disapproved Card Declined";
+				paymentString += StringUtils.repeat(" ", 17);
+				paymentString += "|\n";
+			}
+		}
+		else {
+			
+		}
+		return paymentString;
+	}
+	
 	public String makeFooter(){
 		String footer = "";
 		return footer;
@@ -145,6 +194,6 @@ public class Receipt {
 	
 	@Override
 	public String toString() {
-		return makeHeader() + printGroceries() + printTotal() + makeFooter();
+		return makeHeader() + printGroceries() + printTotal() + printPayment() + makeFooter();
 	}
 }

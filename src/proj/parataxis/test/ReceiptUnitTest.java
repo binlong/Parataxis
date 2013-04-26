@@ -61,7 +61,11 @@ public class ReceiptUnitTest {
 		groceryList.add(grocery3);
 		groceryList.add(grocery4);
 		
-		receipt = new Receipt(groceryList, customer, tax);
+		receipt = new Receipt(groceryList, customer, tax, 0.0);
+		when(customer.getCardNum()).thenReturn(1234567890121111L);
+		when(customer.getType()).thenReturn('D');
+		when(customer.getMoneyAvail()).thenReturn(000.00);
+		System.out.println(receipt);
 	}
 
 	@Test
@@ -94,7 +98,7 @@ public class ReceiptUnitTest {
 		when(grocery2.getQuantity()).thenReturn(1);
 		when(grocery3.getBasePrice()).thenReturn(15.20);
 		when(grocery3.getQuantity()).thenReturn(1);
-		receipt = new Receipt(groceryList, customer, tax);
+		receipt = new Receipt(groceryList, customer, tax, 0.0);
 		
 		double subTotal = receipt.calculateSalesSubtotal();
 		assertThat("subtotal",subTotal, equalTo(51.75));
@@ -104,7 +108,6 @@ public class ReceiptUnitTest {
 	@Test
 	public void printGroceries_printsCorrectly() throws Exception {
 		String groceryReceipt = receipt.printGroceries();
-		System.out.println(receipt);
 		assertThat("grocery", groceryReceipt, equalTo("|1   HM SALISBURY STEAK        MQ          |\n"+
 													  "|      2 Ea.   @   1/    2.22        4.44  |\n"+
 													  "|2   GG VF STEAMER BROC CAR CA KQ          |\n"+

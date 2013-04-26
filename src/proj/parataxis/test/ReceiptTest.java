@@ -26,7 +26,7 @@ public class ReceiptTest {
 		
 		Discount discount = new Discount();
 		
-		Receipt receipt = new Receipt(scanList, customerList.get(1), taxList.get(1));
+		Receipt receipt = new Receipt(scanList, customerList.get(1), taxList.get(1), 0.0);
 		
 		// See what the receipt looks like when put together.
 		System.out.print(receipt.makeHeader());

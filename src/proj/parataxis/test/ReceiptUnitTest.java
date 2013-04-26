@@ -14,6 +14,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import parataxis.dto.Coupon;
 import parataxis.dto.Customer;
 import parataxis.dto.Grocery;
 import parataxis.dto.Receipt;
@@ -37,35 +38,46 @@ public class ReceiptUnitTest {
 		grocery1.setType('Q');
 		grocery1.setName("HM SALISBURY STEAK");
 		grocery1.setQuantity(2);
+		grocery1.setUpc("11111111111");
 		Grocery grocery2 = new Grocery();
 		grocery2.setBasePrice(1.92);
 		grocery2.setCategory('K');
 		grocery2.setType('Q');
 		grocery2.setName("GG VF STEAMER BROC CAR CA");
 		grocery2.setQuantity(3);
+		grocery2.setUpc("2222222222");
 		Grocery grocery3 = new Grocery();
 		grocery3.setBasePrice(3.52);
 		grocery3.setCategory('K');
 		grocery3.setType('F');
 		grocery3.setQuantity(1);
 		grocery3.setName("GM HONEY NUT CHEERIOS");
+		grocery3.setUpc("3333333333");
 		Grocery grocery4 = new Grocery();
 		grocery4.setBasePrice(0.20);
 		grocery4.setCategory('P');
 		grocery4.setType('Q');
 		grocery4.setName("MYER LEMONS LARGE");
 		grocery4.setQuantity(5);
+		grocery4.setUpc("4444444444");
 		ArrayList<Grocery> groceryList = new ArrayList<Grocery>();
 		groceryList.add(grocery1);
 		groceryList.add(grocery2);
 		groceryList.add(grocery3);
 		groceryList.add(grocery4);
 		
-		receipt = new Receipt(groceryList, customer, tax, 0.0);
+		Coupon coupon1 = new Coupon('S', "1111111111", 5.00);
+		
+		ArrayList<Coupon> couponList = new ArrayList<Coupon>();
+		couponList.add(coupon1);
+		
+		receipt = new Receipt(groceryList, customer, tax, 0.0, couponList);
 		when(customer.getCardNum()).thenReturn(1234567890121111L);
 		when(customer.getType()).thenReturn('D');
 		when(customer.getMoneyAvail()).thenReturn(000.00);
+		Receipt cashReceipt = new Receipt(groceryList, 156.88, tax, couponList);
 		System.out.println(receipt);
+		System.out.println(cashReceipt);
 	}
 
 	@Test
@@ -98,7 +110,7 @@ public class ReceiptUnitTest {
 		when(grocery2.getQuantity()).thenReturn(1);
 		when(grocery3.getBasePrice()).thenReturn(15.20);
 		when(grocery3.getQuantity()).thenReturn(1);
-		receipt = new Receipt(groceryList, customer, tax, 0.0);
+		receipt = new Receipt(groceryList, customer, tax, 0.0, new ArrayList<Coupon>());
 		
 		double subTotal = receipt.calculateSalesSubtotal();
 		assertThat("subtotal",subTotal, equalTo(51.75));

@@ -5,8 +5,10 @@ import init.parataxis.main.PopulateTax;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
+import parataxis.dto.Coupon;
 import parataxis.dto.Customer;
 import parataxis.dto.Grocery;
 import parataxis.dto.Receipt;
@@ -26,7 +28,7 @@ public class ReceiptTest {
 		
 		Discount discount = new Discount();
 		
-		Receipt receipt = new Receipt(scanList, customerList.get(1), taxList.get(1), 0.0);
+		Receipt receipt = new Receipt(scanList, customerList.get(1), taxList.get(1), 0.0, new ArrayList<Coupon>());
 		
 		// See what the receipt looks like when put together.
 		System.out.print(receipt.makeHeader());

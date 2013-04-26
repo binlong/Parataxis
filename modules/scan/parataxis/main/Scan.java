@@ -5,8 +5,11 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
+import parataxis.dto.Coupon;
 import parataxis.dto.Grocery;
 import init.parataxis.main.PopulateGrocery;
 
@@ -15,6 +18,11 @@ public class Scan {
 	
 	private String scanFilename;
 	final private String filefolder = "scanfiles/";
+	private ArrayList<Grocery> itemBasket = new ArrayList<Grocery>();
+	ArrayList<Coupon> couponList = new ArrayList<Coupon>(); 
+	private Date date;
+	private double cashBack;
+
 	
 	//final private String groceryFilename = "GroceryDefault.txt";
 	
@@ -37,20 +45,28 @@ public class Scan {
 		this.scanFilename = filefolder+filename;
 	}
 	
+	public Date getDate() {
+		return date;
+	}
+
+	public double getCashBack() {
+		return cashBack;
+	}
+
 	/**
 	 * Simulate the scanning of items into the system. This function loads the UPC codes from the file
 	 * initialized with the Scan object. This method does not do any calculations.
 	 * @return ArrayList&lt;Grocery&gt; A List of the Grocery items (including quantity) to be purchased by the customer 
 	 * @throws IOException
-	 * @throws ParseException 
 	 */
 	public ArrayList<Grocery> scanItems() throws IOException, ParseException {
 		File file = new File(this.scanFilename);
 		BufferedReader is = null;
 		String text;
-		ArrayList<Grocery> itemBasket = new ArrayList<Grocery>();
+		
 		PopulateGrocery popGroc = new PopulateGrocery();
-		ArrayList<Grocery> groceryItems = popGroc.populateGroceryList();
+		ArrayList<Grocery> groceryItems = popGroc.populateGroceryList(); // List of groceries in inventory
+	
 		
 		is = new BufferedReader(new FileReader(file));	
 		while((text = is.readLine()) != null){
@@ -70,6 +86,68 @@ public class Scan {
 				}
 			}
 		}
+		is.close();
+		return itemBasket;
+	}
+	public ArrayList<Grocery> scanFile() throws IOException, ParseException {
+		File file = new File(this.scanFilename);
+		BufferedReader is = null;
+		String text;
+		ArrayList<Grocery> itemBasket = new ArrayList<Grocery>();
+		PopulateGrocery popGroc = new PopulateGrocery();
+		ArrayList<Grocery> groceryItems = popGroc.populateGroceryList();
+		is = new BufferedReader(new FileReader(file));
+		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+		this.date = (formatter.parse(is.readLine()));
+		//System.out.println(date);
+		while(!(text = is.readLine()).equals("#")){
+			for(Grocery lookup : groceryItems){
+				if(text.equals(lookup.getUpc())){
+					if(lookup.getQuantity() == 0) {
+						// Initialize first occurance of the item
+						Grocery tempGroc = lookup;
+						tempGroc.incrementQuantity();
+						itemBasket.add(tempGroc);
+					} else {
+						/* Increment the item if already scanned.
+						 * This should also result in keeping the correct placement of the item in 
+						 * the list (based on when the item was first scanned. */
+						lookup.incrementQuantity();
+					}
+				}
+			}
+		}
+		while(!(text = is.readLine()).equals("***")){
+			// The input file is delimited by commas
+			String[] temp = text.split(",");
+			
+			// Parse the input file into appropriate types
+			char type = temp[0].charAt(0);
+			String upc = temp[1];
+			double discount = 0;
+			int buyM = 0;
+			int getN = 0;
+			if(type == 'S' || type == 'M') {
+				discount = Double.parseDouble(temp[2]);
+			} else {
+				buyM = Integer.parseInt(temp[2]); 
+				getN = Integer.parseInt(temp[3]);
+			}
+			
+			
+			//Create a Grocery object using the parsed input
+			Coupon tempT = null;
+			if(type == 'S' || type == 'M') {
+				tempT = new Coupon(type, upc, discount);
+			} else {
+				tempT = new Coupon(type, upc, buyM, getN);
+			}
+			
+			
+			// Add the newly generated Grocery file into the List
+	        couponList.add(tempT);
+		}
+
 		is.close();
 		return itemBasket;
 	}

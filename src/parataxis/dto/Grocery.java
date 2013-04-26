@@ -21,6 +21,7 @@ public class Grocery {
 	private char salesTax;
 	//data for Scan
 	private int quantity;
+	private double weight;
 	private boolean coupon;
 	
 	public boolean getCoupon() {
@@ -191,6 +192,14 @@ public class Grocery {
 		
 	}
 	
+
+	public double getWeight() {
+		return weight;
+	}
+
+	public void setWeight(double weight) {
+		this.weight = weight;
+	}
 
 	//TODO: create a way to display relevant information (with toString or do it here)
 	/**

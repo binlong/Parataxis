@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -29,12 +31,15 @@ public class PopulateTax {
 	 * @return ArrayList<Grocery>
 	 * @param filename The name of the file used to populate the list
 	 * @throws IOException
+	 * @throws ParseException 
 	 */
-	public ArrayList<Tax> populateTaxList() throws IOException{
+	public ArrayList<Tax> populateTaxList() throws IOException, ParseException{
 		File file = new File(this.filename);
 		BufferedReader is = null;
 		String text;
 		ArrayList<Tax> alTaxTest = new ArrayList<Tax>();
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
 		
 		is = new BufferedReader(new FileReader(file));	
 		
@@ -43,9 +48,10 @@ public class PopulateTax {
 			String[] temp = text.split(",");
 			
 			// Parse the input file into appropriate types
-			double taxRate = Double.parseDouble(temp[0]);
-			Date startDate = java.sql.Date.valueOf(temp[1]);
-			Date endDate = java.sql.Date.valueOf(temp[2]);
+			
+			double taxRate = Double.parseDouble(temp[0].substring(0, 5));
+			Date startDate = formatter.parse(temp[1]);
+			Date endDate = formatter.parse(temp[2]);
 			
 			
 			//Create a Grocery object using the parsed input

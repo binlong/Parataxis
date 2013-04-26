@@ -24,6 +24,18 @@ public class Discount {
 	
 	private ArrayList<Coupon> cpnList;
 	
+	public double getDiscnt() {
+		return discnt;
+	}
+	public void setDiscnt(double discnt) {
+		this.discnt = discnt;
+	}
+	public double getTotal() {
+		return total;
+	}
+	public void setTotal(double total) {
+		this.total = total;
+	}
 	public Discount () {
 		couponFilename = filefolder+"ScanFileDefault.txt";
 	}

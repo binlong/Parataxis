@@ -31,7 +31,8 @@ public class ReceiptTest {
 		// See what the receipt looks like when put together.
 		System.out.print(receipt.makeHeader());
 		System.out.print(receipt.printGroceries());
-		discount.applyCoupon();
+		if(discount.getTotal() != 0)
+			discount.applyCoupon();
 		System.out.print(receipt.printTotal());
 	}
 

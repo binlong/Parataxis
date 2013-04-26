@@ -4,6 +4,7 @@ import init.parataxis.main.PopulateCustomers;
 import init.parataxis.main.PopulateTax;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.List;
 
 import parataxis.dto.Customer;
@@ -15,7 +16,7 @@ import discount.parataxis.main.Discount;
 
 public class ReceiptTest {
 	
-	public static void main(String[] args) throws IOException{
+	public static void main(String[] args) throws IOException, ParseException{
 		Scan scan = new Scan(); 
 		List<Grocery> scanList = scan.scanItems(); 
 		PopulateCustomers cust = new PopulateCustomers();

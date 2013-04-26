@@ -5,7 +5,10 @@ import init.parataxis.main.PopulateCoupon;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
+
+import org.apache.commons.lang3.StringUtils;
 
 import parataxis.dto.Coupon;
 import parataxis.dto.Grocery;
@@ -28,7 +31,7 @@ public class Discount {
 		couponFilename = filefolder+couponFilename;
 	}
 	
-	public void applyCoupon() throws IOException{
+	public void applyCoupon() throws IOException, ParseException{
 		Scan scn = new Scan();
 		ArrayList<Grocery> scanList = scn.scanItems(); 
 		
@@ -44,7 +47,8 @@ public class Discount {
 					if(cpn.getType() == 'S'){
 						//System.out.print("Store");
 						discnt = cpn.getDiscount(); 
-						System.out.print("|  Mfg Store Coupon                 "+currencyFormatter.format(discnt));
+//						System.out.print("|  Mfg Store Coupon                 "+format..format(discnt));
+						System.out.print("|  Mfg Store Coupon                 "+String.format("%.2f",discnt));
 						if(currencyFormatter.format(discnt).length() == 5)
 							System.out.println("  |");
 						else if (currencyFormatter.format(discnt).length() == 6)
@@ -56,27 +60,27 @@ public class Discount {
 					else if(cpn.getType() == 'M'){
 						//System.out.print("Cents-off Manufacturer");
 						discnt = cpn.getDiscount(); 
-						System.out.print("|  Mfg Cents Off Coupon             "+currencyFormatter.format(discnt));
+						System.out.print("|  Mfg Cents Off Coupon             "+String.format("%.2f",discnt));
 						if(currencyFormatter.format(discnt).length() == 5)
-							System.out.println("  |");
+							System.out.println("   |");
 						else if (currencyFormatter.format(discnt).length() == 6)
-							System.out.println(" |");
+							System.out.println("  |");
 						else
-							System.out.println("|");
+							System.out.println(" |");
 						total += discnt;
 					}
 					else if(cpn.getType() == 'X'){
 						discnt = cpn.getDiscount(); 
 						if(grc.getQuantity() >= (cpn.getBuyM()+cpn.getGetN())){							
 							discnt = cpn.getGetN()*grc.getBasePrice();
-							System.out.print("|  HWI Cents Off Coupon             "+currencyFormatter.format(discnt));
+							System.out.print("|  HWI Cents Off Coupon             "+String.format("%.2f",discnt));
 						
 						if(currencyFormatter.format(discnt).length() == 5)
-							System.out.println("  |");
+							System.out.println("   |");
 						else if (currencyFormatter.format(discnt).length() == 6)
-							System.out.println(" |");
+							System.out.println("  |");
 						else
-							System.out.println("|");
+							System.out.println(" |");
 						
 						}
 						total += discnt;
@@ -84,13 +88,13 @@ public class Discount {
 				}
 			}
 		}
-		System.out.print("|                      Total        "+currencyFormatter.format(total));
+		System.out.print("|                      Total        "+String.format("%.2f",discnt));
 		if(currencyFormatter.format(total).length() == 5)
-			System.out.println("  |");
+			System.out.println("    |");
 		else if (currencyFormatter.format(total).length() == 6)
-			System.out.println(" |");
+			System.out.println("   |");
 		else
-			System.out.println("|");
+			System.out.println("  |");
 		System.out.println("|=================================         |");
 	}
 }

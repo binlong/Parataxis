@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import parataxis.dto.Grocery;
@@ -41,8 +42,9 @@ public class Scan {
 	 * initialized with the Scan object. This method does not do any calculations.
 	 * @return ArrayList&lt;Grocery&gt; A List of the Grocery items (including quantity) to be purchased by the customer 
 	 * @throws IOException
+	 * @throws ParseException 
 	 */
-	public ArrayList<Grocery> scanItems() throws IOException {
+	public ArrayList<Grocery> scanItems() throws IOException, ParseException {
 		File file = new File(this.scanFilename);
 		BufferedReader is = null;
 		String text;

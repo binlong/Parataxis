@@ -1,6 +1,7 @@
 package scan.parataxis.test;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import parataxis.dto.Grocery;
@@ -11,7 +12,7 @@ public class ScanTest {
 	
 	final static String testFilename = "ScanFile1.txt";
 	
-	public static void main(String[] args) throws IOException{
+	public static void main(String[] args) throws IOException, ParseException{
 		System.out.println("[TEST] Entering ScanTest main method");
 		
 		Scan scn = new Scan(testFilename);

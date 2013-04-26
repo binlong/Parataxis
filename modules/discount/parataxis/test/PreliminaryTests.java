@@ -3,6 +3,7 @@ package discount.parataxis.test;
 import init.parataxis.main.PopulateCoupon;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import parataxis.dto.Coupon;
@@ -18,7 +19,7 @@ import scan.parataxis.main.Scan;
 public class PreliminaryTests {
 
 	
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, ParseException {
 		Scan scn = new Scan();
 		ArrayList<Grocery> scanList = scn.scanItems(); 
 		

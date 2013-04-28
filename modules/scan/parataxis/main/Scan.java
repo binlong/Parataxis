@@ -96,26 +96,45 @@ public class Scan {
 		ArrayList<Grocery> itemBasket = new ArrayList<Grocery>();
 		PopulateGrocery popGroc = new PopulateGrocery();
 		ArrayList<Grocery> groceryItems = popGroc.populateGroceryList();
+		String[] upcsplit;
+		String upcName;
+		int quant;
 		is = new BufferedReader(new FileReader(file));
 		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
 		this.date = (formatter.parse(is.readLine()));
 		//System.out.println(date);
 		while(!(text = is.readLine()).equals("#")){
+			if(text.indexOf(',') == -1) {
+				upcName = text;
+				quant = 1;
+			} else {
+				upcsplit = text.split(",");
+				upcName = upcsplit[0];
+				quant = Integer.parseInt(upcsplit[1]);
+			}
 			for(Grocery lookup : groceryItems){
-				if(text.equals(lookup.getUpc())){
-					if(lookup.getQuantity() == 0) {
-						// Initialize first occurance of the item
-						Grocery tempGroc = lookup;
-						tempGroc.incrementQuantity();
-						itemBasket.add(tempGroc);
-					} else {
-						/* Increment the item if already scanned.
-						 * This should also result in keeping the correct placement of the item in 
-						 * the list (based on when the item was first scanned. */
-						lookup.incrementQuantity();
-					}
+				if(upcName.equals(lookup.getUpc())){
+					Grocery tempGroc = lookup;
+					tempGroc.setQuantity(quant);
+					itemBasket.add(tempGroc);
 				}
 			}
+			
+//			for(Grocery lookup : groceryItems){
+//				if(text.equals(lookup.getUpc())){
+//					if(lookup.getQuantity() == 0) {
+//						// Initialize first occurance of the item
+//						Grocery tempGroc = lookup;
+//						tempGroc.incrementQuantity();
+//						itemBasket.add(tempGroc);
+//					} else {
+//						/* Increment the item if already scanned.
+//						 * This should also result in keeping the correct placement of the item in 
+//						 * the list (based on when the item was first scanned. */
+//						lookup.incrementQuantity();
+//					}
+//				}
+//			}
 		}
 		while(!(text = is.readLine()).equals("***")){
 			// The input file is delimited by commas

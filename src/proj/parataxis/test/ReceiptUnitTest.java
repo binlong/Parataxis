@@ -9,6 +9,7 @@ import static org.mockito.Mockito.when;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Before;
@@ -38,7 +39,7 @@ public class ReceiptUnitTest {
 		grocery1.setType('Q');
 		grocery1.setName("HM SALISBURY STEAK");
 		grocery1.setQuantity(2);
-		grocery1.setUpc("11111111111");
+		grocery1.setUpc("1111111111");
 		Grocery grocery2 = new Grocery();
 		grocery2.setBasePrice(1.92);
 		grocery2.setCategory('K');
@@ -67,15 +68,21 @@ public class ReceiptUnitTest {
 		groceryList.add(grocery4);
 		
 		Coupon coupon1 = new Coupon('S', "1111111111", 5.00);
+		Coupon coupon2 = new Coupon('M', "2222222222", 2.00);
+		Coupon coupon3 = new Coupon('X', "4444444444", 4, 1);
 		
 		ArrayList<Coupon> couponList = new ArrayList<Coupon>();
 		couponList.add(coupon1);
+		couponList.add(coupon2);
+		couponList.add(coupon3);
 		
-		receipt = new Receipt(groceryList, customer, tax, 0.0, couponList);
+		Date date = new Date(2013, 4, 7);
+		
+		receipt = new Receipt(date, groceryList, customer, tax, 0.0, couponList);
 		when(customer.getCardNum()).thenReturn(1234567890121111L);
 		when(customer.getType()).thenReturn('D');
 		when(customer.getMoneyAvail()).thenReturn(000.00);
-		Receipt cashReceipt = new Receipt(groceryList, 156.88, tax, couponList);
+		Receipt cashReceipt = new Receipt(date, groceryList, 156.88, tax, couponList);
 		System.out.println(receipt);
 		System.out.println(cashReceipt);
 	}
@@ -110,7 +117,8 @@ public class ReceiptUnitTest {
 		when(grocery2.getQuantity()).thenReturn(1);
 		when(grocery3.getBasePrice()).thenReturn(15.20);
 		when(grocery3.getQuantity()).thenReturn(1);
-		receipt = new Receipt(groceryList, customer, tax, 0.0, new ArrayList<Coupon>());
+		Date date = new Date(2013, 4, 7);
+		receipt = new Receipt(date, groceryList, customer, tax, 0.0, new ArrayList<Coupon>());
 		
 		double subTotal = receipt.calculateSalesSubtotal();
 		assertThat("subtotal",subTotal, equalTo(51.75));
@@ -132,9 +140,9 @@ public class ReceiptUnitTest {
 	@Test
 	public void printTotal_printsCorrectly() throws Exception {
 		String totalString = receipt.printTotal();
-		assertThat("total", totalString, equalTo("|******** Sale Subtotal***          14.72  |\n"+
+		assertThat("total", totalString, equalTo("|******** Sale Subtotal***           7.52  |\n"+
 												 "|   Sales Tax                        0.00  |\n"+
                                                  "|   Sales Tax Rate:   0.000%               |\n"+
-                                                 "|************ Total Sale            14.72  |\n"));
+                                                 "|************ Total Sale             7.52  |\n"));
 	}
 }

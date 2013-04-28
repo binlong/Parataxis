@@ -1,5 +1,7 @@
 package parataxis.dto;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -20,13 +22,15 @@ public class Receipt {
 	private double cashBack = -1.0;
 	private double totalDiscount = 0.0;
 	private int totalItems = 0;
+	private Date date;
 
 	public Receipt() {
 
 	}
 
-	public Receipt(List<Grocery> groceryList, Customer customer, Tax tax,
+	public Receipt(Date date, List<Grocery> groceryList, Customer customer, Tax tax,
 			Double cashBack, List<Coupon> couponList) {
+		this.date = date;
 		this.groceryList = groceryList;
 		this.customer = customer;
 		this.tax = tax;
@@ -34,7 +38,8 @@ public class Receipt {
 		this.couponList = couponList;
 	}
 
-	public Receipt(List<Grocery> groceryList, Double cash, Tax tax, List<Coupon> couponList) {
+	public Receipt(Date date, List<Grocery> groceryList, Double cash, Tax tax, List<Coupon> couponList) {
+		this.date = date;
 		this.groceryList = groceryList;
 		this.cash = cash;
 		this.tax = tax;
@@ -46,7 +51,7 @@ public class Receipt {
 		for (Grocery grocery : groceryList) {
 			subtotal += grocery.getQuantity() * grocery.getBasePrice();
 		}
-		return subtotal;
+		return subtotal - totalDiscount + cashBack;
 	}
 
 	public double calculateSalesTax() {
@@ -155,10 +160,11 @@ public class Receipt {
 				grocery.getUpc();
 				for (Coupon coupon : couponList) {
 					if (grocery.getUpc().equals(coupon.getUpc()) && !grocery.getCoupon()) {
+						
 						grocery.scannedCoupon();
 						if (coupon.getType() == 'S') {
 							coupon.getDiscount();
-							couponString += "  HWI Cents off Coupon";
+							couponString += "|  HWI Cents off Coupon";
 							couponString += StringUtils.repeat(" ", 18 - String.format("%.2f", coupon.getDiscount()).length());
 							couponString += String.format("%.2f", coupon.getDiscount());
 							couponString += "  |\n";
@@ -166,18 +172,38 @@ public class Receipt {
 						} 
 						else if (coupon.getType() == 'M') {
 							coupon.getDiscount();
-							couponString += "  Mfg Cents off Coupon";
+							couponString += "|  Mfg Cents off Coupon";
+							couponString += StringUtils.repeat(" ", 18 - String.format("%.2f", coupon.getDiscount()).length());
+							couponString += String.format("%.2f", coupon.getDiscount());
+							couponString += "  |\n";
 							totalDiscount += coupon.getDiscount();
 						} 
 						else if (coupon.getType() == 'X') {
 							coupon.getDiscount();
 							if (grocery.getQuantity() >= (coupon.getBuyM() + coupon.getGetN())) {
-								// coupon.getGetN()*grocery.getBasePrice();
+								couponString += "|  Mfg Buy " + coupon.getBuyM() + " Get " + coupon.getGetN() + " Free Coupon";
+								couponString += StringUtils.repeat(" ", 11 - String.format("%.2f", grocery.getBasePrice()).length());
+								couponString += String.format("%.2f", grocery.getBasePrice());
+								couponString += "  |\n";
 								totalDiscount += coupon.getGetN() * grocery.getBasePrice();
 							}
 						}
 					}
 				}
+			}
+			if (couponString.length() > 45) {
+				couponString += "|";
+				couponString += StringUtils.repeat(" ", 22);
+				couponString += "Total";
+				couponString += StringUtils.repeat(" ", 13 - String.format("%.2f", totalDiscount).length());
+				couponString += String.format("%.2f", totalDiscount);
+				couponString += "  |\n";
+				couponString += "|=================================";
+				couponString += StringUtils.repeat(" ", 9);
+				couponString += "|\n";
+			}
+			else {
+				couponString = "";
 			}
 		}
 		return couponString;
@@ -271,6 +297,23 @@ public class Receipt {
 		footer += StringUtils.repeat(" ", 25 - String.format("%.2f", totalDiscount).length());
 		footer += String.format("%.2f", totalDiscount);
 		footer += "  |\n";
+		footer += "|=================================";
+		footer += StringUtils.repeat(" ", 9);
+		footer += "|\n";
+		footer += "|";
+		footer += StringUtils.repeat(" ", 42);
+		footer += "|\n";
+		footer += "|    Date:";
+		footer += StringUtils.repeat(" ", 16);
+		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd");
+		footer += dateFormat.format(date);
+		footer += "/" + date.getYear();
+		footer += StringUtils.repeat(" ", 7);
+		footer += "|\n";
+		footer += "|";
+		footer += StringUtils.repeat(" ", 42);
+		footer += "|\n";
+		footer += "+------------------------------------------+";
 		return footer;
 	}
 

@@ -151,8 +151,7 @@ public class Scan {
 			} else {
 				buyM = Integer.parseInt(temp[2]); 
 				getN = Integer.parseInt(temp[3]);
-			}
-			
+			}			
 			
 			//Create a Grocery object using the parsed input
 			Coupon tempT = null;
@@ -160,8 +159,7 @@ public class Scan {
 				tempT = new Coupon(type, upc, discount);
 			} else {
 				tempT = new Coupon(type, upc, buyM, getN);
-			}
-			
+			}			
 			
 			// Add the newly generated Grocery file into the List
 	        couponList.add(tempT);
@@ -171,8 +169,14 @@ public class Scan {
 		return itemBasket;
 	}
 	
+	
+	
 	// METHODS USED FOR TESTING
 	public String getFile_TEST(){
 		return scanFilename;
+	}
+
+	public ArrayList<Coupon> getCouponList() {
+		return couponList;
 	}
 }

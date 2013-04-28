@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 
+import parataxis.dto.Coupon;
 import parataxis.dto.Grocery;
 import scan.parataxis.main.Scan;
 
@@ -29,6 +30,12 @@ public class ScanTest {
 		
 		System.out.println("[TEST] Get Date Method");
 		System.out.println(scn.getDate() + " should equal Tue Jan 15 00:00:00 CST 2013"); 
+		
+		System.out.println("[TEST] Coupon Scanning Stuff");
+		ArrayList<Coupon> testcpn = scn.getCouponList();
+		for(Coupon i : testcpn){
+			System.out.println("UPC: "+i.getUpc()+", discount:"+i.getDiscount());
+		}
 		
 		System.out.println("[TEST] Exiting ScanTest main method successfully");
 	}

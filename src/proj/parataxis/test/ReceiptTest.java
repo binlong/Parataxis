@@ -36,6 +36,7 @@ public class ReceiptTest {
 		if(discount.getTotal() != 0)
 			discount.applyCoupon();
 		System.out.print(receipt.printTotal());
+		System.out.println(receipt.makeFooter());
 	}
 
 }

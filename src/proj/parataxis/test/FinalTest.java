@@ -12,7 +12,7 @@ import scan.parataxis.main.Scan;
 
 public class FinalTest {
 	public static void main(String[] args){
-		Scan scan = new Scan("smallFile.txt");
+		Scan scan = new Scan("SampleInputLarge.txt");
 		Receipt receipt = null;
 		ArrayList<Grocery> list = null;
 		try {

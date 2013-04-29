@@ -25,7 +25,7 @@ public class Scan {
 	ArrayList<Coupon> couponList = new ArrayList<Coupon>(); 
 	private Date date;
 	private double amountPaid;
-	private int cardNum = 0;
+	private long cardNum = 0;
 	private double cashback;
 	private Customer customer;
 	private String paymentType;
@@ -64,7 +64,7 @@ public class Scan {
 		return amountPaid;
 	}
 
-	public int getCardNum() {
+	public long getCardNum() {
 		return cardNum;
 	}
 
@@ -202,8 +202,10 @@ public class Scan {
 			} else if(text.charAt(0) == 'C' || text.charAt(0) == 'D'){
 				paymentType = "card";
 				cardParsing = text.split(",");
-				cardNum = Integer.parseInt(cardParsing[1]);
-				cashback = Double.parseDouble(cardParsing[2]);
+				cardNum = Long.parseLong(cardParsing[1]);
+				System.out.println(cardParsing[2].substring(1, cardParsing[2].length()));
+				cashback = Double.parseDouble(cardParsing[2].substring(1, cardParsing[2].length()));
+				
 				if(!(cashback == 0 || cashback == 5.00 || cashback == 10.00 || cashback == 15.00 || cashback == 20.00)){
 					System.out.println("INVALID CASH AMOUNT LOL");
 					cashback = 0;
@@ -214,7 +216,9 @@ public class Scan {
 					}
 				}
 			}	
-			if(is.readLine().equals("EOS")){
+			text = is.readLine();
+			System.out.println(text);
+			if(text == null || text.equals("EOS")){
 				continue;
 			}
 		}

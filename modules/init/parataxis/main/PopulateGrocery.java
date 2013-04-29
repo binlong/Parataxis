@@ -17,6 +17,7 @@ public class PopulateGrocery {
 	
 	// folder and file names for the input files
 	private String filename;
+	boolean duplicate;
 	final private String filefolder = "groceryfiles/";
 	
 	public PopulateGrocery() {
@@ -72,7 +73,13 @@ public class PopulateGrocery {
 					buyM, buyN, buyStartDate, buyEndDate, salesTax);
 			
 			// Add the newly generated Grocery file into the List
-			alGrocTest.add(tmpG);
+			duplicate = false;
+			for(Grocery gitem : alGrocTest){
+				if(gitem.getUpc().equals(tmpG.getUpc()))
+					duplicate = true;
+			}
+			if(!duplicate)
+				alGrocTest.add(tmpG);
 		}
 
 		is.close();

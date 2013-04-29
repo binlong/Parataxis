@@ -20,7 +20,7 @@ public class ScanTest {
 		System.out.println("[TEST] Scan initialized using file: "+scn.getFile_TEST());
 		
 		
-		ArrayList<Grocery> testlist = scn.scanFile();
+		ArrayList<Grocery> testlist = scn.getGroceryList();
 		System.out.println("[TEST] testlist initialized via scanItems() | testlist.size()="+testlist.size());
 		
 		System.out.println("[TEST] Printing out contents of testlist: ");

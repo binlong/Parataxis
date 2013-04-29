@@ -3,9 +3,15 @@ package finalPackage;
 import init.parataxis.main.PopulateCustomers;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import parataxis.dto.Customer;
+import parataxis.dto.Grocery;
+import parataxis.dto.Receipt;
+import parataxis.dto.Tax;
+import scan.parataxis.main.Scan;
 
 public class ReqTester {
 
@@ -14,16 +20,42 @@ public class ReqTester {
 		
 	ArrayList<Customer> testCustomers =new ArrayList<Customer>();
 	PopulateCustomers p = new PopulateCustomers();
-	
+	ArrayList<Grocery> list = null;
 	try {
 		testCustomers = p.populateCustomerList();
 	} catch (IOException e) {
 		e.printStackTrace();
 	}
 	
-	for(Customer cust:testCustomers)
-	System.out.println(cust);
+	
+	
+	for(Customer cust:testCustomers){
+		System.out.println(cust);
 	}
+	
+	Scan scan = new Scan("SampleInputLarge.txt");
+	Receipt receipt = null;
+	try {
+		list = scan.scanFile();
+	} catch (IOException | ParseException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	Tax tax = new Tax(7.7, new Date(), new Date());
+	if(scan.getPaymentType().equals("card")){
+		receipt  = new Receipt(scan.getDate(), list, scan.getCustomer(), tax, scan.getCashback(), scan.getCouponList());
+	} else if (scan.getPaymentType().equals("cash")){
+		receipt = new Receipt(scan.getDate(), list, scan.getAmountPaid(), tax, scan.getCouponList());
+		}
+	
+	// TESTS
+	tc00006(receipt);
+    tc00007(receipt);
+	tc00008(receipt);
+	tc00009(receipt);
+	tc00010(receipt);
+}
+	
 	
 	public static void tc00001(){
 		/* later */
@@ -40,20 +72,40 @@ public class ReqTester {
 	public static void tc00005(){
 		/* later */
 	}
-	public static void tc00006(){
-		/* later */
+	/**
+	 *  GP1-00006 Checkout shall print out each receipt with a top margin of three blank lines.
+	 */
+	public static void tc00006(Receipt receipt){
+		System.out.println("Top margin of 3 blank lines");
+		System.out.println(receipt.makeHeader()+"\n");
 	}
-	public static void tc00007(){
-		/* later */
+	/**
+	 * GP1-00007 Checkout shall print out each receipt with bottom margin of one blank line.
+	 */
+	public static void tc00007(Receipt receipt){
+		System.out.println("Bottom margin of 1 blank line");
+		System.out.println(receipt.makeFooter()+"\n");
 	}
-	public static void tc00008(){
-		/* later */
+	/**
+	 * GP1-00008 Checkout shall print centered on the fourth line from the top  of each receipt "Hoggley-Woggley-Inc.
+	 */
+	public static void tc00008(Receipt receipt){
+		System.out.println("4th line: Hoggley-Woggley-Inc. centered");
+		System.out.println(receipt.makeHeader()+"\n");
 	}
-	public static void tc00009(){
-		/* later */
+	/**
+	 * GP1-00009 Checkout shall print centered on the fifth line from the top of each receipt the store identifier.
+	 */
+	public static void tc00009(Receipt receipt){
+		System.out.println("5th line: store identifier");
+		System.out.println(receipt.makeHeader()+"\n");
 	}
-	public static void tc00010(){
-		/* later */
+	/**
+	 * GP1-000010	Checkout shall print a blank line after the fifth line on each receipt.
+	 */
+	public static void tc00010(Receipt receipt){
+		System.out.println("Blank line after the fifth line");
+		System.out.println(receipt.makeHeader()+"\n");
 	}
 	public static void tc00011(){
 		/* later */

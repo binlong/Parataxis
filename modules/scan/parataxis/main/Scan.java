@@ -1,5 +1,8 @@
 package scan.parataxis.main;
 
+import init.parataxis.main.PopulateCustomers;
+import init.parataxis.main.PopulateGrocery;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -10,8 +13,8 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import parataxis.dto.Coupon;
+import parataxis.dto.Customer;
 import parataxis.dto.Grocery;
-import init.parataxis.main.PopulateGrocery;
 
 
 public class Scan {
@@ -21,7 +24,11 @@ public class Scan {
 	private ArrayList<Grocery> itemBasket = new ArrayList<Grocery>();
 	ArrayList<Coupon> couponList = new ArrayList<Coupon>(); 
 	private Date date;
-	private double cashBack;
+	private double amountPaid;
+	private int cardNum = 0;
+	private double cashback;
+	private Customer customer;
+	private String paymentType;
 
 	
 	//final private String groceryFilename = "GroceryDefault.txt";
@@ -49,8 +56,28 @@ public class Scan {
 		return date;
 	}
 
-	public double getCashBack() {
-		return cashBack;
+	public ArrayList<Grocery> getItemBasket() {
+		return itemBasket;
+	}
+
+	public double getAmountPaid() {
+		return amountPaid;
+	}
+
+	public int getCardNum() {
+		return cardNum;
+	}
+
+	public double getCashback() {
+		return cashback;
+	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public String getPaymentType() {
+		return paymentType;
 	}
 
 	/**
@@ -66,7 +93,7 @@ public class Scan {
 		
 		PopulateGrocery popGroc = new PopulateGrocery();
 		ArrayList<Grocery> groceryItems = popGroc.populateGroceryList(); // List of groceries in inventory
-	
+		
 		
 		is = new BufferedReader(new FileReader(file));	
 		while((text = is.readLine()) != null){
@@ -98,73 +125,99 @@ public class Scan {
 		ArrayList<Grocery> groceryItems = popGroc.populateGroceryList();
 		String[] upcsplit;
 		String upcName;
-		int quant;
+		int quant = 0;
+		double weight;
+		String amountTemp = null;
+		String[] cardParsing;
+		PopulateCustomers popCust = new PopulateCustomers();
+		ArrayList<Customer> custList = popCust.populateCustomerList();
+		
 		is = new BufferedReader(new FileReader(file));
 		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
-		this.date = (formatter.parse(is.readLine()));
-		//System.out.println(date);
-		while(!(text = is.readLine()).equals("#")){
-			if(text.indexOf(',') == -1) {
-				upcName = text;
-				quant = 1;
-			} else {
-				upcsplit = text.split(",");
-				upcName = upcsplit[0];
-				quant = Integer.parseInt(upcsplit[1]);
-			}
-			for(Grocery lookup : groceryItems){
-				if(upcName.equals(lookup.getUpc())){
-					Grocery tempGroc = lookup;
-					tempGroc.setQuantity(quant);
-					itemBasket.add(tempGroc);
+		while((text = is.readLine()) != null) {
+			//this.date = (formatter.parse(is.readLine()));
+			this.date = formatter.parse(text);
+			//System.out.println(date);
+			while(!(text = is.readLine()).equals("#")){
+				if(text.indexOf(',') == -1) {
+					upcName = text;
+					quant = 1;
+				} else {
+					upcsplit = text.split(",");
+					upcName = upcsplit[0];
+					amountTemp = upcsplit[1];
+					
+				}
+				for(Grocery lookup : groceryItems){
+					if(upcName.equals(lookup.getUpc())){
+						if(lookup.getType() == 'F' || lookup.getType() == 'Q') {
+							Grocery tempGroc = lookup;
+							if(quant == 1)
+								tempGroc.setQuantity(quant);
+							else
+								tempGroc.setQuantity(Integer.parseInt(amountTemp));
+							itemBasket.add(tempGroc);
+						} else if(lookup.getType() == 'P') {
+							Grocery tempGroc = lookup;
+							tempGroc.setWeight(Double.parseDouble(amountTemp));
+							itemBasket.add(tempGroc);
+						}
+					}
 				}
 			}
-			
-//			for(Grocery lookup : groceryItems){
-//				if(text.equals(lookup.getUpc())){
-//					if(lookup.getQuantity() == 0) {
-//						// Initialize first occurance of the item
-//						Grocery tempGroc = lookup;
-//						tempGroc.incrementQuantity();
-//						itemBasket.add(tempGroc);
-//					} else {
-//						/* Increment the item if already scanned.
-//						 * This should also result in keeping the correct placement of the item in 
-//						 * the list (based on when the item was first scanned. */
-//						lookup.incrementQuantity();
-//					}
-//				}
-//			}
+			while(!(text = is.readLine()).equals("***")){
+				// The input file is delimited by commas
+				String[] temp = text.split(",");
+				
+				// Parse the input file into appropriate types
+				char type = temp[0].charAt(0);
+				String upc = temp[1];
+				double discount = 0;
+				int buyM = 0;
+				int getN = 0;
+				if(type == 'S' || type == 'M') {
+					discount = Double.parseDouble(temp[2]);
+				} else {
+					buyM = Integer.parseInt(temp[2]); 
+					getN = Integer.parseInt(temp[3]);
+				}			
+				
+				//Create a Grocery object using the parsed input
+				Coupon tempT = null;
+				if(type == 'S' || type == 'M') {
+					tempT = new Coupon(type, upc, discount);
+				} else {
+					tempT = new Coupon(type, upc, buyM, getN);
+				}			
+				
+				
+				// Add the newly generated Grocery file into the List
+		        couponList.add(tempT);
+			}
+			text = is.readLine();
+			if(text.charAt(0) == '$'){
+				paymentType = "cash";
+				String dollarAmt = text.substring(1, text.length());
+				amountPaid = Double.parseDouble(dollarAmt);
+			} else if(text.charAt(0) == 'C' || text.charAt(0) == 'D'){
+				paymentType = "card";
+				cardParsing = text.split(",");
+				cardNum = Integer.parseInt(cardParsing[1]);
+				cashback = Double.parseDouble(cardParsing[2]);
+				if(!(cashback == 0 || cashback == 5.00 || cashback == 10.00 || cashback == 15.00 || cashback == 20.00)){
+					System.out.println("INVALID CASH AMOUNT LOL");
+					cashback = 0;
+				}
+				for(Customer i : custList){
+					if(i.getCardNum() == cardNum){
+						customer = i;
+					}
+				}
+			}	
+			if(is.readLine().equals("EOS")){
+				continue;
+			}
 		}
-		while(!(text = is.readLine()).equals("***")){
-			// The input file is delimited by commas
-			String[] temp = text.split(",");
-			
-			// Parse the input file into appropriate types
-			char type = temp[0].charAt(0);
-			String upc = temp[1];
-			double discount = 0;
-			int buyM = 0;
-			int getN = 0;
-			if(type == 'S' || type == 'M') {
-				discount = Double.parseDouble(temp[2]);
-			} else {
-				buyM = Integer.parseInt(temp[2]); 
-				getN = Integer.parseInt(temp[3]);
-			}			
-			
-			//Create a Grocery object using the parsed input
-			Coupon tempT = null;
-			if(type == 'S' || type == 'M') {
-				tempT = new Coupon(type, upc, discount);
-			} else {
-				tempT = new Coupon(type, upc, buyM, getN);
-			}			
-			
-			// Add the newly generated Grocery file into the List
-	        couponList.add(tempT);
-		}
-
 		is.close();
 		return itemBasket;
 	}

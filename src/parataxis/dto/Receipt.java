@@ -305,9 +305,9 @@ public class Receipt {
 		footer += "|\n";
 		footer += "|    Date:";
 		footer += StringUtils.repeat(" ", 16);
-		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 		footer += dateFormat.format(date);
-		footer += "/" + date.getYear();
+		//footer += "/" + date.getYear();
 		footer += StringUtils.repeat(" ", 7);
 		footer += "|\n";
 		footer += "|";

@@ -121,6 +121,7 @@ public class Scan {
 		while((text = is.readLine()) != null){
 			Basket b = new Basket();
 			//this.date = (formatter.parse(is.readLine()));
+			//System.out.println("Scanner here: " + text);
 			b.setDate(formatter.parse(text));
 			//System.out.println(date);
 			while(!(text = is.readLine()).equals("#")){
@@ -198,8 +199,6 @@ public class Scan {
 					System.out.println("INVALID CASH AMOUNT LOL");
 					cashback = 0;
 				}
-				b.setCashback(cashback);
-				
 				for(Customer i : custList){
 					if(i.getCardNum() == cardNum){
 						b.setCustomer(i);

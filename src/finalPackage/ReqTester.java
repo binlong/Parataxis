@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 
+import parataxis.dto.Basket;
 import parataxis.dto.Customer;
 import parataxis.dto.Grocery;
 import parataxis.dto.Receipt;
@@ -15,48 +16,51 @@ import scan.parataxis.main.Scan;
 
 public class ReqTester {
 
-	
+
 	public static void main(String[] args) {
-		
-	ArrayList<Customer> testCustomers =new ArrayList<Customer>();
-	PopulateCustomers p = new PopulateCustomers();
-	ArrayList<Grocery> list = null;
-	try {
-		testCustomers = p.populateCustomerList();
-	} catch (IOException e) {
-		e.printStackTrace();
-	}
-	
-	
-	
-	for(Customer cust:testCustomers){
-		System.out.println(cust);
-	}
-	
-	Scan scan = new Scan("SampleInputLarge.txt");
-	Receipt receipt = null;
-	try {
-		list = scan.scanFile();
-	} catch (IOException | ParseException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-	Tax tax = new Tax(7.7, new Date(), new Date());
-	if(scan.getPaymentType().equals("card")){
-		receipt  = new Receipt(scan.getDate(), list, scan.getCustomer(), tax, scan.getCashback(), scan.getCouponList());
-	} else if (scan.getPaymentType().equals("cash")){
-		receipt = new Receipt(scan.getDate(), list, scan.getAmountPaid(), tax, scan.getCouponList());
+
+		ArrayList<Customer> testCustomers =new ArrayList<Customer>();
+		PopulateCustomers p = new PopulateCustomers();
+		ArrayList<Basket> list = null;
+		try {
+			testCustomers = p.populateCustomerList();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-	
-	// TESTS
-	tc00006(receipt);
-    tc00007(receipt);
-	tc00008(receipt);
-	tc00009(receipt);
-	tc00010(receipt);
-}
-	
-	
+
+
+
+		for(Customer cust:testCustomers){
+			System.out.println(cust);
+		}
+		Receipt receipt = null;
+		try {
+			Scan scan = new Scan("SampleInputLarge.txt");
+			
+
+			list = scan.scanFile();
+		} catch (IOException | ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Tax tax = new Tax(7.7, new Date(), new Date());
+		for(Basket b: list){
+			if(b.getPaymentType().equals("card")){
+				receipt  = new Receipt(b.getDate(), b.getItemBasket(), b.getCustomer(), tax, b.getCashback(), b.getCouponList());
+			} else if (b.getPaymentType().equals("cash")){
+				receipt = new Receipt(b.getDate(),b.getItemBasket(), b.getAmountPaid(), tax, b.getCouponList());
+			}
+		}
+
+		// TESTS
+		tc00006(receipt);
+		tc00007(receipt);
+		tc00008(receipt);
+		tc00009(receipt);
+		tc00010(receipt);
+	}
+
+
 	public static void tc00001(){
 		/* later */
 	}
@@ -165,7 +169,7 @@ public class ReqTester {
 		/* later */
 	}
 	public static void tc00030(){
-	    /* later */
+		/* later */
 	}
 	public static void tc00031(){
 		/* later */
@@ -290,7 +294,7 @@ public class ReqTester {
 	public static void tc00071(){
 		/* later */
 	}
-	
-	
+
+
 
 }

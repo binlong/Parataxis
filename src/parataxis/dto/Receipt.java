@@ -49,7 +49,10 @@ public class Receipt {
 	public double calculateSalesSubtotal() {
 		Double subtotal = 0.0;
 		for (Grocery grocery : groceryList) {
-			subtotal += grocery.getQuantity() * grocery.getBasePrice();
+			if(grocery.getType() == 'P')
+				subtotal += grocery.getWeight() * grocery.getBasePrice();
+			else
+				subtotal += grocery.getQuantity() * grocery.getBasePrice();
 		}
 		return subtotal - totalDiscount + cashBack;
 	}
@@ -132,8 +135,8 @@ public class Receipt {
 					groceryReceipt += StringUtils.repeat(" ", 12 - String.format("%.2f", grocery.getBasePrice() * grocery.getWeight()).length());
 					groceryReceipt += String.format("%.2f", grocery.getBasePrice() * grocery.getWeight());
 				} else {
-				groceryReceipt += StringUtils.repeat(" ", 12 - String.format("%.2f", grocery.getBasePrice() * grocery.getQuantity()).length());
-				groceryReceipt += String.format("%.2f", grocery.getBasePrice() * grocery.getQuantity());
+					groceryReceipt += StringUtils.repeat(" ", 12 - String.format("%.2f", grocery.getBasePrice() * grocery.getQuantity()).length());
+					groceryReceipt += String.format("%.2f", grocery.getBasePrice() * grocery.getQuantity());
 				}
 			} else {
 				groceryReceipt += StringUtils.repeat(" ", 8 - String.format("%.2f", grocery.getBasePrice()).length());

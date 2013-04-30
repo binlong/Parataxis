@@ -8,7 +8,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 
 import parataxis.dto.Basket;
 import parataxis.dto.Coupon;
@@ -23,11 +28,11 @@ public class ReqTester3 {
 	private Receipt receiptCard;
 	private Receipt receiptCash;
 	private Date date;
-	private List<Grocery> groceryList;
+	private List<Grocery> groceryList = new ArrayList<Grocery>();
 	private Customer customer;
 	private Tax tax;
 	private Double cashBack;
-	private List<Coupon> couponList;
+	private List<Coupon> couponList = new ArrayList<Coupon>();
 	private double cash;
 	
 	@Before
@@ -75,7 +80,9 @@ public class ReqTester3 {
 		couponList.add(coupon1);
 		couponList.add(coupon2);
 		couponList.add(coupon3);
-		cashBack = 0.0;
+		
+		customer = new Customer('C', 1234567890121111L, 100.00);
+		cashBack = 5.0;
 		
 		
 		receiptCard = new Receipt(date, groceryList, customer, tax, cashBack, couponList);
@@ -83,77 +90,143 @@ public class ReqTester3 {
 	
 	/** Checkout prints a cash back section if and only if the customer requests cash back. */
 	/** Checkout prints out the number of items purchased on a line immediately after the initial border line of the items purchased section. */
-	public static void tc00037(){
-		
-		
+	@Test
+	public void tc00037() {	
+		String receipt = receiptCard.toString();
+		assertThat("receipt", receipt.contains("Cash Back Requested"), equalTo(true));
 	}
+	
 	/** Checkout ends the print out of the items purchased section by printing a border line where a border line is thirty-three equal sign characters starting in column one. */
-	public static void tc00038(){
-		
+	@Test
+	public void tc00038(){
+		String receipt = receiptCard.toString();
+		assertThat("receipt", receipt.contains("|=================================         |\n" +
+												 "|    ITEMS PURCHASED:   11                 |\n" +
+												 "|=================================         |"), equalTo(true));
 	}
+	
 	/** Checkout prints out an amount saved today section  if and only if the amount a given customer saved is a nonnegative amount of money. */
-	public static void tc00039(){
-		
+	@Test
+	public void tc00039(){
+		String receipt = receiptCard.toString();
+		assertThat("receipt", receipt.contains("|=================================         |\n" +
+				 								 "|    SAVED TODAY                     7.20  |\n" +
+				                                 "|=================================         |"), equalTo(true));
 	}
+	
 	/** Checkout prints the amount saved today line immediately after the training borderline of the items purchased section if and only if an amount saved section is needed for a given customer's purchases. */
-	public static void tc00040(){
-		
+	@Test
+	public void tc00040(){
+		String receipt = receiptCard.toString();
+		System.out.println(receipt);
+		assertThat("receipt", receipt.contains("|=================================         |\n" +
+												 "|    ITEMS PURCHASED:   11                 |\n" +
+												 "|=================================         |\n" +
+												 "|    SAVED TODAY                     7.20  |\n" +
+												 "|=================================         |"), equalTo(true));
 	}
+	
 	/** Checkout ends the print out of the amount saved section  by printing a border line where a border line is thirty-three equal sign characters starting in column one if and only if an amount saved section is needed for a given customer's purchases. */
-	public static void tc00041(){
-		
+	@Test
+	public void tc00041(){
+		String receipt = receiptCard.toString();
+		assertThat("receipt", receipt.contains("|=================================         |\n" +
+				 							   "|    SAVED TODAY                     7.20  |\n" +
+				                               "|=================================         |"), equalTo(true));
 	}
+	
 	/** Checkout terminate the printing of each receipt for a given customer's basket with a date processed section. */
-	public static void tc00042(){
-		
+	@Test
+	public void tc00042(){
+		String receipt = receiptCard.toString();
+		assertThat("receipt", receipt.contains("|                                          |\n" +
+											   "|    Date:                05/07/3913       |\n" +
+											   "|                                          |"), equalTo(true));
 	}
+	
 	/** Checkout begins the date processed section with a blank line. */
-	public static void tc00043(){
-		
+	@Test
+	public void tc00043(){
+		String receipt = receiptCard.toString();
+		assertThat("receipt", receipt.contains("|                                          |\n" +
+											   "|    Date:                05/07/3913       |\n" +
+											   "|                                          |"), equalTo(true));
 	}
+	
 	/** Checkout prints out a date line immediately after the first line of the date processed section where the date line indicates the date that the items in a given customer's basket were purchased. */
-	public static void tc00044(){
-		
+	@Test
+	public void tc00044(){
+		String receipt = receiptCard.toString();
+		assertThat("receipt", receipt.contains("|                                          |\n" +
+											   "|    Date:                05/07/3913       |\n" +
+											   "|                                          |"), equalTo(true));
 	}
+	
 	/** Checkout ends the date processed section with a blank line. */
-	public static void tc00045(){
-		
+	@Test
+	public void tc00045(){
+		String receipt = receiptCard.toString();
+		assertThat("receipt", receipt.contains("|                                          |\n" +
+											   "|    Date:                05/07/3913       |\n" +
+											   "|                                          |"), equalTo(true));
 	}
+	
 	/** Checkout calculates sales tax for grocery store items that are marked as taxable for the date the customer is making any purchases. */
-	public static void tc00046(){
-		
+	@Test
+	public void tc00046(){
+		Assert.assertFalse(true);
 	}
-	/** Checkout  identifies grocery store items based on the unique assigned UPC of the item. */
-	public static void tc00047(){
-		
+	
+	/** Checkout identifies grocery store items based on the unique assigned UPC of the item. */
+	@Test
+	public void tc00047(){
+		Assert.assertFalse(true);
 	}
+	
 	/** Checkout  create an exception log for any item in a customer's basket whose UPC is not found. */
-	public static void tc00048(){
-		
+	@Test
+	public void tc00048(){
+		Assert.assertFalse(true);
 	}
+	
 	/** Checkout does not end processing when it encounters any item in a customer's basket whose UPC is not found. */
-	public static void tc00049(){
-		
+	@Test
+	public void tc00049(){
+		Assert.assertFalse(true);
 	}
+	
 	/** Checkout identifies each grocery store item by name based on the item's UPC. */
-	public static void tc00050(){
-		
+	@Test
+	public void tc00050(){
+		Assert.assertFalse(true);
 	}
+	
 	/** Checkout identifies each grocery store item by name on the customer's sale receipt. */
-	public static void tc00051(){
-		
+	@Test
+	public void tc00051(){
+		String receipt = receiptCard.toString();
+		assertThat("receipt", receipt.contains("|3   GM HONEY NUT CHEERIOS     KF    3.52  |"), equalTo(true));
 	}
+	
 	/** Checkout identifies a customer's receipt the type for each item being purchased. */
-	public static void tc00052(){
-		
+	@Test
+	public void tc00052(){
+		String receipt = receiptCard.toString();
+		assertThat("receipt", receipt.contains("|3   GM HONEY NUT CHEERIOS     KF    3.52  |"), equalTo(true));
 	}
+	
 	/** Checkout identifies a customer's receipt the category for each item being purchased. */
-	public static void tc00053(){
-		
+	@Test
+	public void tc00053(){
+		String receipt = receiptCard.toString();
+		assertThat("receipt", receipt.contains("|3   GM HONEY NUT CHEERIOS     KF    3.52  |"), equalTo(true));
 	}
+	
 	/** Checkout applies the base price for a grocery store item based on the item's UPC and the date the customer is  purchasing the item. */
-	public static void tc00054(){
-		
+	@Test
+	public void tc00054(){
+		String receipt = receiptCard.toString();
+		assertThat("receipt", receipt.contains("|3   GM HONEY NUT CHEERIOS     KF    3.52  |"), equalTo(true));
 	}
 	
 }

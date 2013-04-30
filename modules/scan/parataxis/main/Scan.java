@@ -121,7 +121,6 @@ public class Scan {
 		while((text = is.readLine()) != null){
 			Basket b = new Basket();
 			//this.date = (formatter.parse(is.readLine()));
-			System.out.println("Scanner here: " + text);
 			b.setDate(formatter.parse(text));
 			//System.out.println(date);
 			while(!(text = is.readLine()).equals("#")){
@@ -192,13 +191,15 @@ public class Scan {
 				b.setPaymentType("card");
 				cardParsing = text.split(",");
 				cardNum = Long.parseLong(cardParsing[1]);
-				System.out.println(cardParsing[2].substring(1, cardParsing[2].length()));
+				//System.out.println(cardParsing[2].substring(1, cardParsing[2].length()));
 				cashback = Double.parseDouble(cardParsing[2].substring(1, cardParsing[2].length()));
 
 				if(!(cashback == 0 || cashback == 5.00 || cashback == 10.00 || cashback == 15.00 || cashback == 20.00)){
 					System.out.println("INVALID CASH AMOUNT LOL");
 					cashback = 0;
 				}
+				b.setCashback(cashback);
+				
 				for(Customer i : custList){
 					if(i.getCardNum() == cardNum){
 						b.setCustomer(i);
@@ -206,7 +207,7 @@ public class Scan {
 				}
 			}	
 			text = is.readLine();
-			System.out.println(text);
+			//System.out.println(text);
 			/*if(text == null || text.equals("EOS")){
 				continue;
 			}*/

@@ -51,7 +51,10 @@ public class Receipt {
 		for (Grocery grocery : groceryList) {
 			subtotal += grocery.getQuantity() * grocery.getBasePrice();
 		}
-		return subtotal - totalDiscount + cashBack;
+		if (cashBack > 0) {
+			return subtotal -= totalDiscount + cashBack;
+		}
+		return subtotal - totalDiscount;
 	}
 
 	public double calculateSalesTax() {
@@ -73,7 +76,14 @@ public class Receipt {
 	}
 
 	public boolean checkFunding() {
-		if (customer.getMoneyAvail() > total) {
+		if (customer.getMoneyAvail() >= total) {
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean checkCashFunding() {
+		if (cash >= total) {
 			return true;
 		}
 		return false;
@@ -269,10 +279,17 @@ public class Receipt {
 			paymentString += StringUtils.repeat(" ", 27 - String.format("%.2f", cash).length());
 			paymentString += String.format("%.2f", cash);
 			paymentString += "  |\n";
-			paymentString += "|Change";
-			paymentString += StringUtils.repeat(" ", 34 - String.format("%.2f", cash - total).length());
-			paymentString += String.format("%.2f", cash - total);
-			paymentString += "  |\n";
+			if (checkCashFunding()) {
+				paymentString += "|Change";
+				paymentString += StringUtils.repeat(" ", 34 - String.format("%.2f", cash - total).length());
+				paymentString += String.format("%.2f", cash - total);
+				paymentString += "  |\n";
+			}
+			else {
+				paymentString += "|Sales Canceled Insufficient Funds";
+				paymentString += StringUtils.repeat(" ", 9);
+				paymentString += "|\n";
+			}
 			paymentString += "|";
 			paymentString += StringUtils.repeat(" ", 42);
 			paymentString += "|\n";

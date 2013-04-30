@@ -260,6 +260,7 @@ public class Receipt {
 			paymentString += String.format("%.2f", total);
 			paymentString += "  |\n";
 			if (checkFunding()) {
+				customer.setMoneyAvail(customer.getMoneyAvail() - total);
 				paymentString += "|Approved";
 				paymentString += StringUtils.repeat(" ", 34);
 				paymentString += "|\n";

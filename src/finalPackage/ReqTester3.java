@@ -75,8 +75,10 @@ public class ReqTester3 {
 		couponList.add(coupon1);
 		couponList.add(coupon2);
 		couponList.add(coupon3);
+		cashBack = 0.0;
 		
-//		receiptCard = new Receipt(date, groceryList, customer, tax, );
+		
+		receiptCard = new Receipt(date, groceryList, customer, tax, cashBack, couponList);
 	}
 	
 	/** Checkout prints a cash back section if and only if the customer requests cash back. */

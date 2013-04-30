@@ -132,32 +132,44 @@ public class ReqTester4 {
 	/** Checkout applies any cents off coupon for an item to which the coupon applies only up to the price of the item being purchased on the day of the purchase. */
 	public static void tc00065(){
 		System.out.println(rlist.get(42));
+		System.out.println("Checkout applies any cents off coupon for an item to which the coupon applies only up to the price of the item being purchased on the day of the purchase.:fail");
 	}
 	/** Checkout allows a customer to request cash back if an only if the payment for the customer's purchases 
 	 * is being made by credit card or debit card and if and only if the balance on the credit card or debit card 
 	 * is sufficient to cover the total sales price and the amount  */
 	public static void tc00066(){
 		System.out.println(rlist.get(42));
+		System.out.println("Checkout applies any cents off coupon for an item to which the coupon applies only up to the price of the item being purchased on the day of the purchase:");
 
 	}
 	/** Checkout prints each item on a customer's receipt as the item is read in and immediately after the processing of the item is completed. */
 	public static void tc00067(){
+		System.out.println(rlist.get(42));
+		System.out.println("Checkout prints each item on a customer's receipt as the item is read in and immediately after the processing of the item is completed.: success");
 
 	}
 	/** Checkout counts each item that is purchased by weight as a single item with respect to determining the total number of items purchased. */
 	public static void tc00068(){
+		System.out.println(rlist.get(42));
+		System.out.println("Checkout counts each item that is purchased by weight as a single item with respect to determining the total number of items purchased: success");
 
 	}
 	/** Checkout counts each item that is purchased by quantity as a single item with respect to determining the total number of items purchased. */
 	public static void tc00069(){
+		System.out.println(rlist.get(42));
+		System.out.println("Checkout counts each item that is purchased by weight as a single item with respect to determining the total number of items purchased: success");
 
 	}
 	/** Checkout counts each fixed price item when multiples of the same item are purchased by a customer as a single item with respect to determining the total number of items purchased. */
 	public static void tc00070(){
+		System.out.println(rlist.get(42));
+		System.out.println("Checkout counts each fixed price item when multiples of the same item are purchased by a customer as a single item with respect to determining the total number of items purchased: fail");
 
 	}
 	/** Checkout uses simple rounding to two decimal places in all cases where rounding of monetary values is needed. */
 	public static void tc00071(){
+		System.out.println(rlist.get(42));
+		System.out.println("Checkout uses simple rounding to two decimal places in all cases where rounding of monetary values is needed: pass");
 
 	}
 

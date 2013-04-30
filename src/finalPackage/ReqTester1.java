@@ -60,19 +60,22 @@ public class ReqTester1 {
 		// TESTS
 //		tc00001(list);
 //		tc00002(list);
+//		tc00003(); // FAILED
 //		tc00004();
+//		tc00006(receipt);
+//		tc00007(receipt);
+//		tc00008(receipt);
+//		tc00009(receipt);
+//		tc00010(receipt);
 //		tc00011();
 //		tc00012();
 //		tc00013();
 //		tc00014();
 //		tc00015();
 //		tc00016();
-		tc00017();
-//		tc00006(receipt);
-//		tc00007(receipt);
-//		tc00008(receipt);
-//		tc00009(receipt);
-//		tc00010(receipt);
+//		tc00017();
+		tc00018();
+//		tc0);
 	}
 	/** Checkout processes grocery store items from customer's basket for a given date. */
 	public static void tc00001(ArrayList<Basket> list){
@@ -310,7 +313,7 @@ public class ReqTester1 {
 	/** Checkout accumulates multiples of the same item being purchased
 	 *  when such multiple items scanned contiguously from a given customer's basket */
 	public static void tc00015(){
-		System.out.println("GP1-00015");
+		System.out.println("GP1-00015 scanned continguisly");
 		Basket b;
 		Receipt receipt = null;
 		Tax tax = new Tax(7.7, new Date(), new Date());
@@ -334,7 +337,7 @@ public class ReqTester1 {
 	}
 	/** Checkout calculates and print sales tax for any taxable item in a given customer's basket. */
 	public static void tc00016(){
-		System.out.println("GP1-00016");
+		System.out.println("GP1-00016 calc and pritn sales tax");
 		Basket b;
 		Receipt receipt = null;
 		Tax tax = new Tax(7.7, new Date(), new Date());
@@ -359,7 +362,7 @@ public class ReqTester1 {
 	}
 	/** Checkout calculates and print the price for any item that is purchased by weight. */
 	public static void tc00017(){
-		System.out.println("GP1-00017");
+		System.out.println("GP1-00017 purchase by weight");
 		Basket b;
 		Receipt receipt = null;
 		Tax tax = new Tax(7.7, new Date(), new Date());
@@ -384,7 +387,28 @@ public class ReqTester1 {
 	}
 	/** Checkout calculates and print the price for any item that is purchased by quantity. */
 	public static void tc00018(){
-		System.out.println("GP1-00018");
+		System.out.println("GP1-00018 purchased by quantity");
+		Basket b;
+		Receipt receipt = null;
+		Tax tax = new Tax(7.7, new Date(), new Date());
+		int loc = 40;
+		for(int i = loc; i <= loc+3; i++){
+				//System.out.println(list.get(i));
+				b = list.get(i);
+			try{
+				if(b.getPaymentType().equals("card")){
+					receipt  = new Receipt(b.getDate(), b.getItemBasket(), b.getCustomer(), tax, b.getCashback(), b.getCouponList());
+				} else if (b.getPaymentType().equals("cash")){
+					receipt = new Receipt(b.getDate(),b.getItemBasket(), b.getAmountPaid(), tax, b.getCouponList());
+				}
+			} catch(NullPointerException e){
+				System.out.println("Empty");
+			}
+			System.out.println("[TESTING REQ GP1-00018]");
+			System.out.println(receipt.printGroceries());
+			System.out.println("[END TESTING REQ GP1-00018]");
+			// seems to work for F type groceries...
+		}
 	}
 	
 }

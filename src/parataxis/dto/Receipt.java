@@ -112,7 +112,11 @@ public class Receipt {
 				groceryReceipt += "|\n";
 				groceryReceipt += "|";
 				groceryReceipt += StringUtils.repeat(" ", 6);
+				if(grocery.getType() == 'P'){
+					groceryReceipt += grocery.getWeight();
+				} else {
 				groceryReceipt += grocery.getQuantity();
+				}
 				if (grocery.getType() == 'Q') {
 					groceryReceipt += " Ea.";
 				} else {
@@ -124,8 +128,13 @@ public class Receipt {
 
 				groceryReceipt += StringUtils.repeat(" ", 8 - String.format("%.2f", grocery.getBasePrice()).length());
 				groceryReceipt += String.format("%.2f", grocery.getBasePrice());
+				if(grocery.getType() == 'P') {
+					groceryReceipt += StringUtils.repeat(" ", 12 - String.format("%.2f", grocery.getBasePrice() * grocery.getWeight()).length());
+					groceryReceipt += String.format("%.2f", grocery.getBasePrice() * grocery.getWeight());
+				} else {
 				groceryReceipt += StringUtils.repeat(" ", 12 - String.format("%.2f", grocery.getBasePrice() * grocery.getQuantity()).length());
 				groceryReceipt += String.format("%.2f", grocery.getBasePrice() * grocery.getQuantity());
+				}
 			} else {
 				groceryReceipt += StringUtils.repeat(" ", 8 - String.format("%.2f", grocery.getBasePrice()).length());
 				groceryReceipt += String.format("%.2f", grocery.getBasePrice());

@@ -19,7 +19,7 @@ public class Receipt {
 	private double salesTax = 0.0;
 	private double total = 0.0;
 	private double cash = 0.0;
-	private double cashBack = -1.0;
+	private double cashBack = 0.0;
 	private double totalDiscount = 0.0;
 	private int totalItems = 0;
 	private Date date;
@@ -51,10 +51,7 @@ public class Receipt {
 		for (Grocery grocery : groceryList) {
 			subtotal += grocery.getQuantity() * grocery.getBasePrice();
 		}
-		if (cashBack > 0) {
-			return subtotal -= totalDiscount + cashBack;
-		}
-		return subtotal - totalDiscount;
+		return subtotal - totalDiscount + cashBack;
 	}
 
 	public double calculateSalesTax() {
@@ -69,9 +66,6 @@ public class Receipt {
 	}
 
 	public double calculateTotal() {
-		if (cashBack >= 0.0) {
-			return salesSubtotal + salesTax + cashBack;
-		}
 		return salesSubtotal + salesTax;
 	}
 
@@ -145,7 +139,7 @@ public class Receipt {
 
 	public String printCashBack() {
 		String cashBackString = "";
-		if (cashBack >= 0.0) {
+		if (cashBack > 0.0) {
 			cashBackString += "|=================================";
 			cashBackString += StringUtils.repeat(" ", 9);
 			cashBackString += "|\n";

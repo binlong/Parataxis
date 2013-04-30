@@ -12,12 +12,15 @@ import org.apache.commons.lang3.StringUtils;
 
 import parataxis.dto.Basket;
 import parataxis.dto.Customer;
-import parataxis.dto.Grocery;
 import parataxis.dto.Receipt;
 import parataxis.dto.Tax;
 import scan.parataxis.main.Scan;
 
-
+/**
+ * Requirements 1-18 done by Randy Weber
+ * @author rweber
+ *
+ */
 public class ReqTester1 {
 	static ArrayList<Basket> list = null;
 	
@@ -58,24 +61,23 @@ public class ReqTester1 {
 		}
 
 		// TESTS
-//		tc00001(list);
-//		tc00002(list);
-//		tc00003(); // FAILED
-//		tc00004();
-//		tc00006(receipt);
-//		tc00007(receipt);
-//		tc00008(receipt);
-//		tc00009(receipt);
-//		tc00010(receipt);
-//		tc00011();
-//		tc00012();
-//		tc00013();
-//		tc00014();
-//		tc00015();
-//		tc00016();
-//		tc00017();
+		tc00001(list);
+		tc00002(list);
+		tc00003(); // FAILED
+		tc00004();
+		tc00006(receipt);
+		tc00007(receipt);
+		tc00008(receipt);
+		tc00009(receipt);
+		tc00010(receipt);
+		tc00011();
+		tc00012();
+		tc00013();
+		tc00014();
+		tc00015();
+		tc00016();
+		tc00017();
 		tc00018();
-//		tc0);
 	}
 	/** Checkout processes grocery store items from customer's basket for a given date. */
 	public static void tc00001(ArrayList<Basket> list){
@@ -160,7 +162,27 @@ public class ReqTester1 {
 	/** Checkout prints out each receipt with a left margin width flush to the left. */
 	public static void tc00005(){
 		System.out.println("GP1-00005");
-	}/**
+		Basket b;
+		Receipt receipt = null;
+		Tax tax = new Tax(7.7, new Date(), new Date());
+		for(int i = 0; i < 3; i++){
+				//System.out.println(list.get(i));
+			b = list.get(i);
+			try{
+				if(b.getPaymentType().equals("card")){
+					receipt  = new Receipt(b.getDate(), b.getItemBasket(), b.getCustomer(), tax, b.getCashback(), b.getCouponList());
+				} else if (b.getPaymentType().equals("cash")){
+					receipt = new Receipt(b.getDate(),b.getItemBasket(), b.getAmountPaid(), tax, b.getCouponList());
+				}
+			} catch(NullPointerException e){
+				System.out.println("Empty");
+			}
+			System.out.println("[TESTING REQ GP1-00011]");
+			System.out.println(receipt);
+			System.out.println("[END TESTING REQ GP1-00011]");
+		}
+	}
+	/**
 	 *  GP1-00006 Checkout shall print out each receipt with a top margin of three blank lines.
 	 */
 	public static void tc00006(Receipt receipt){
@@ -383,7 +405,6 @@ public class ReqTester1 {
 			System.out.println(receipt.printGroceries());
 			System.out.println("[END TESTING REQ GP1-00017]");
 		}
-		System.out.println("TEST FAILED...");
 	}
 	/** Checkout calculates and print the price for any item that is purchased by quantity. */
 	public static void tc00018(){

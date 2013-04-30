@@ -62,7 +62,7 @@ public class Receipt {
 				salesTotal += grocery.getBasePrice() * ((taxrate / 100));
 			}
 		}
-		return salesTotal;
+		return Double.parseDouble(String.format("%.2f", salesTotal));
 	}
 
 	public double calculateTotal() {
